@@ -1,7 +1,8 @@
 import { Kysely } from 'kysely';
-import { Database } from '../database/database.types';
-import { Game } from './game.entity';
+import { Database } from '../../database/database.types';
+import { Game } from '../domain/game.entity';
 import { Inject, Injectable } from '@nestjs/common';
+import { GameStatus } from '../domain/game-status.enum';
 
 @Injectable()
 export class GameRepository {
@@ -11,12 +12,12 @@ export class GameRepository {
     const gameRow = await this.db.selectFrom('games').selectAll().where('id', '=', id).executeTakeFirst();
     if (!gameRow) return null;
     const players = await this.db.selectFrom('game_players').select('player_id').where('game_id', '=', id).execute();
-    return new Game(
+    return Game.hydrate(
       gameRow.id,
       gameRow.created_at,
-      gameRow.status,
       gameRow.max_players,
-      players.map(p => p.player_id)
+      players.map(p => p.player_id),
+      gameRow.status as GameStatus
     );
   }
 
@@ -35,12 +36,12 @@ export class GameRepository {
     const games: Game[] = [];
     for (const row of gameRows) {
       const players = await this.db.selectFrom('game_players').select('player_id').where('game_id', '=', row.id).execute();
-      games.push(new Game(
+      games.push(Game.hydrate(
         row.id,
         row.created_at,
-        row.status,
         row.max_players,
-        players.map(p => p.player_id)
+        players.map(p => p.player_id),
+        row.status as GameStatus
       ));
     }
     return games;

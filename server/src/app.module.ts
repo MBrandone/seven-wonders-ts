@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GameModule } from './game/game.module';
+import { GameManagementModule } from './game-management/game-management.module';
 import { ConfigModule } from '@nestjs/config';
 import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
-  imports: [GameModule, HealthCheckModule, ConfigModule.forRoot()],
+  imports: [GameManagementModule, HealthCheckModule, ConfigModule.forRoot()],
 })
 export class AppModule {}

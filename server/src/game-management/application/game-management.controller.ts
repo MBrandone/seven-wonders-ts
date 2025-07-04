@@ -1,9 +1,9 @@
 import { Controller, Post, Body, Param, Get } from '@nestjs/common';
-import { GameService } from './game.service';
+import { GameManagementService } from '../services/game-management.service';
 
 @Controller('games')
-export class GameController {
-  constructor(private readonly gameService: GameService) {}
+export class GameManagementController {
+  constructor(private readonly gameService: GameManagementService) {}
 
   @Post()
   async createGame(@Body('maxPlayers') maxPlayers: number) {

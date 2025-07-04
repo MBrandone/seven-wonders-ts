@@ -2,7 +2,7 @@ import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDiscon
 import { Server } from 'socket.io';
 
 @WebSocketGateway({ cors: { origin: '*' } })
-export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class GameManagementGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 

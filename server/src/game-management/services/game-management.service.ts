@@ -1,24 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { GameRepository } from './game.repository';
-import { PlayerRepository } from './player/player.repository';
-import { Game } from './game.entity';
-import { Player } from './player/player.entity';
-import { GameGateway } from './game.gateway';
+import { GameRepository } from '../persistence/game.repository';
+import { PlayerRepository } from '../player/player.repository';
+import { Game } from '../domain/game.entity';
+import { Player } from '../player/player.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
-export class GameService {
+export class GameManagementService {
   constructor(
     private readonly gameRepository: GameRepository,
     private readonly playerRepository: PlayerRepository,
-    private readonly gameGateway: GameGateway,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async createGame(maxPlayers: number) {
     const id = uuidv4();
     const createdAt = new Date();
-    const status: 'waiting' = 'waiting';
-    const game = new Game(id, createdAt, status, maxPlayers, []);
+    const game = Game.create(id, createdAt, maxPlayers, []);
     await this.gameRepository.createGame(game);
     return {
       id: game.id,
@@ -45,12 +44,7 @@ export class GameService {
     }
 
     const result = await this.gameRepository.addPlayerToGame(gameId, player.id);
-
-    const updatedGame = await this.gameRepository.findById(gameId);
-    if (updatedGame && !updatedGame.canAddPlayer()) {
-      this.gameGateway.emitGameFull(gameId);
-    }
-    
+    this.eventEmitter.emit('player.joined', { gameId });
     return result;
   }
 
@@ -72,7 +66,7 @@ export class GameService {
     if (!game) {
       throw new Error('Partie non trouvée');
     }
-    // Récupérer les joueurs
+    
     const players = await Promise.all(
       game.players.map(async (playerId) => {
         const player = await this.playerRepository.findById(playerId);

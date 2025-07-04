@@ -14,13 +14,15 @@ const game_repository_1 = require("./game.repository");
 const player_repository_1 = require("./player/player.repository");
 const database_module_1 = require("../database/database.module");
 const game_gateway_1 = require("./game.gateway");
+const player_joined_reactor_1 = require("./player-joined.reactor");
+const event_emitter_1 = require("@nestjs/event-emitter");
 let GameModule = class GameModule {
 };
 exports.GameModule = GameModule;
 exports.GameModule = GameModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule],
-        providers: [game_service_1.GameService, game_repository_1.GameRepository, player_repository_1.PlayerRepository, game_gateway_1.GameGateway],
+        imports: [database_module_1.DatabaseModule, event_emitter_1.EventEmitterModule.forRoot()],
+        providers: [game_service_1.GameService, game_repository_1.GameRepository, player_repository_1.PlayerRepository, game_gateway_1.GameGateway, player_joined_reactor_1.PlayerJoinedReactor],
         controllers: [game_controller_1.GameController],
         exports: [game_service_1.GameService],
     })

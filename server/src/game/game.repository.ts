@@ -1,0 +1,55 @@
+import { Kysely } from 'kysely';
+import { Database } from '../database/database.types';
+import { Game } from './game.entity';
+import { Inject, Injectable } from '@nestjs/common';
+
+@Injectable()
+export class GameRepository {
+  constructor(@Inject('Kysely') private db: Kysely<Database>) {}
+
+  async findById(id: string): Promise<Game | null> {
+    const gameRow = await this.db.selectFrom('games').selectAll().where('id', '=', id).executeTakeFirst();
+    if (!gameRow) return null;
+    const players = await this.db.selectFrom('game_players').select('player_id').where('game_id', '=', id).execute();
+    return new Game(
+      gameRow.id,
+      gameRow.created_at,
+      gameRow.status,
+      gameRow.max_players,
+      players.map(p => p.player_id)
+    );
+  }
+
+  async createGame(game: Game): Promise<Game> {
+    await this.db.insertInto('games').values({
+      id: game.id,
+      created_at: game.createdAt,
+      status: game.status,
+      max_players: game.maxPlayers
+    }).executeTakeFirst();
+    return game;
+  }
+
+  async findWaitingGames(): Promise<Game[]> {
+    const gameRows = await this.db.selectFrom('games').selectAll().where('status', '=', 'waiting').execute();
+    const games: Game[] = [];
+    for (const row of gameRows) {
+      const players = await this.db.selectFrom('game_players').select('player_id').where('game_id', '=', row.id).execute();
+      games.push(new Game(
+        row.id,
+        row.created_at,
+        row.status,
+        row.max_players,
+        players.map(p => p.player_id)
+      ));
+    }
+    return games;
+  }
+
+  async addPlayerToGame(gameId: string, playerId: string): Promise<{ id: string; game_id: string; player_id: string }> {
+    const id = crypto.randomUUID ? crypto.randomUUID() : require('uuid').v4();
+    await this.db.insertInto('game_players').values({ id, game_id: gameId, player_id: playerId }).executeTakeFirst();
+    return { id, game_id: gameId, player_id: playerId };
+  }
+
+}

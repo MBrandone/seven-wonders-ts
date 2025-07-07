@@ -17,6 +17,7 @@
       - addPlayerToGame
       - listAvailableGame
   - [X] Créer des tests de player joined reactor
+  - [ ] Un joueur ne peut pas rejoindre plusieurs fois une partie
   - Créer une base de tests pour les test e2e
   - [ ] Ne pas enregistrer des dates javascript dans la base de données
 

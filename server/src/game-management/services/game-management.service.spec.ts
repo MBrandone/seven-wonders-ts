@@ -86,7 +86,7 @@ describe('GameManagementService', () => {
                 .rejects.toThrow('Nombre maximum de joueurs atteint pour cette partie');
         });
 
-        it('ajoute un joueur existant au game et l’enregistre', async () => {
+        it("ajoute un joueur existant au game et l'enregistre", async () => {
             // Given
             const game = Game.create('g1', new Date(), 3, []);
             gameRepository.findById = jest.fn(() => Promise.resolve(game));
@@ -105,7 +105,7 @@ describe('GameManagementService', () => {
             expect(eventEmitter.emit).toHaveBeenCalledWith('player.joined', { gameId: 'g1' });
         });
 
-        it('crée un joueur inconnu, l’ajoute au game et enregistre', async () => {
+        it("crée un joueur inconnu, l'ajoute au game et enregistre", async () => {
             // Given
             const game = Game.create('g1', new Date(), 3, []);
             gameRepository.findById = jest.fn(() => Promise.resolve(game));
@@ -126,6 +126,24 @@ describe('GameManagementService', () => {
             expect(gameRepository.addPlayerToGame).toHaveBeenCalledWith(game, 'p3');
             expect(result).toEqual({ id: 'gp2', game_id: 'g1', player_id: 'p3' });
             expect(eventEmitter.emit).toHaveBeenCalledWith('player.joined', { gameId: 'g1' });
+        });
+
+        it('renvoie une erreur si le joueur tente de rejoindre deux fois la même partie', async () => {
+            // Given
+            const player = new Player('p2', 'Bob', new Date());
+            const game = Game.create('g1', new Date(), 3, []);
+            gameRepository.findById = jest.fn(() => Promise.resolve(game));
+            
+            playerRepository.findByName = jest.fn(() => Promise.resolve(player));
+            playerRepository.createPlayer = jest.fn();
+            eventEmitter.emit = jest.fn();
+
+            // When
+            await service.addPlayerToGame('g1', 'Bob');
+
+            // Then
+            await expect(service.addPlayerToGame('g1', 'Bob'))
+                .rejects.toThrow('Ce joueur est déjà dans la partie');
         });
     });
 }); 

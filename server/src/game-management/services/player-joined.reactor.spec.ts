@@ -10,7 +10,7 @@ describe('PlayerJoinedReactor', () => {
   let gameGateway: jest.Mocked<GameManagementGateway>;
 
   const fullGame = Game.hydrate('g1', new Date(), 3, ['p1', 'p2', 'p3'], GameStatus.IN_PROGRESS);
-  const waitingGame = Game.hydrate('g2', new Date(), 3, ['p1', 'p2', 'p3'], GameStatus.WAITING);
+  const waitingGame = Game.hydrate('g2', new Date(), 3, ['p1', 'p2'], GameStatus.WAITING);
 
   beforeEach(() => {
     gameRepository = {

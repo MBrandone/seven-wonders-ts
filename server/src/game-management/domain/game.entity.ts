@@ -27,6 +27,9 @@ export class Game {
   }
 
   addPlayer(playerId: string): void {
+    if (this.players.includes(playerId)) {
+      throw new Error('Ce joueur est déjà dans la partie');
+    }
     this.players.push(playerId);
     if (this.players.length === this.maxPlayers) {
       this.status = GameStatus.IN_PROGRESS;

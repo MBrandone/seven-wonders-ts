@@ -16,7 +16,8 @@
         - Un joueur crée une partie, si son nom est inconnu, je l'ajoute aux joueurs dispos et crée la partie
       - addPlayerToGame
       - listAvailableGame
-  - [ ] Créer des tests de player joined reactor
+  - [X] Créer des tests de player joined reactor
+  - Créer une base de tests pour les test e2e
   - [ ] Ne pas enregistrer des dates javascript dans la base de données
 
 ## 7 Wonders Game

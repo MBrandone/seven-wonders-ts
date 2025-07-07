@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { GameRepository } from '../persistence/game.repository';
-import { PlayerRepository } from '../player/player.repository';
+import { GameRepository } from '../domain/game-repository.interface';
+import { PlayerRepository } from '../domain/player-repository.interface';
 import { Game } from '../domain/game.entity';
-import { Player } from '../player/player.entity';
+import { Player } from '../domain/player.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class GameManagementService {
   constructor(
+    @Inject('GameRepository')
     private readonly gameRepository: GameRepository,
+    @Inject('PlayerRepository')
     private readonly playerRepository: PlayerRepository,
     private readonly eventEmitter: EventEmitter2,
   ) {}
@@ -68,7 +70,7 @@ export class GameManagementService {
     }
     
     const players = await Promise.all(
-      game.players.map(async (playerId) => {
+      game.players.map(async (playerId: string) => {
         const player = await this.playerRepository.findById(playerId);
         return player ? { id: player.id, name: player.name } : null;
       })

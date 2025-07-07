@@ -1,10 +1,11 @@
 import { Kysely } from 'kysely';
 import { Database } from '../../database/database.types';
-import { Player } from './player.entity';
+import { Player } from '../domain/player.entity';
 import { Inject, Injectable } from '@nestjs/common';
+import { PlayerRepository } from '../domain/player-repository.interface';
 
 @Injectable()
-export class PlayerRepository {
+export class SqlPlayerRepository implements PlayerRepository {
   constructor(@Inject('Kysely') private db: Kysely<Database>) {}
 
   async findByName(name: string): Promise<Player | null> {

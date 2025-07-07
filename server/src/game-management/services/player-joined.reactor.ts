@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { GameRepository } from '../persistence/game.repository';
 import { GameManagementGateway } from '../application/game-management.gateway';
+import { GameRepository } from '../domain/game-repository.interface';
 
 @Injectable()
 export class PlayerJoinedReactor {
   constructor(
+    @Inject('GameRepository')
     private readonly gameRepository: GameRepository,
     private readonly gameGateway: GameManagementGateway,
   ) {}

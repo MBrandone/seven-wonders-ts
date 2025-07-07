@@ -3,9 +3,10 @@ import { Database } from '../../database/database.types';
 import { Game } from '../domain/game.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { GameStatus } from '../domain/game-status.enum';
+import { GameRepository } from '../domain/game-repository.interface';
 
 @Injectable()
-export class GameRepository {
+export class SqlGameRepository implements GameRepository {
   constructor(@Inject('Kysely') private db: Kysely<Database>) {}
 
   async findById(id: string): Promise<Game | null> {

@@ -38,6 +38,7 @@ export default function HomePage() {
   const [joinGameId, setJoinGameId] = useState<string | null>(null);
   const [playerName, setPlayerName] = useState('');
   const [joinError, setJoinError] = useState<string | null>(null);
+  const [creatorName, setCreatorName] = useState('');
   const navigate = useNavigate();
 
   const { data: gamesData = [], isPending: loadingGames, error: errorGames } = useQuery<Game[]>({
@@ -54,7 +55,7 @@ export default function HomePage() {
       const res = await fetch(API_URL + '/games', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ maxPlayers }),
+        body: JSON.stringify({ maxPlayers, playerName: creatorName }),
       });
       if (!res.ok) throw new Error('Erreur lors de la création de la partie');
       return res.json();
@@ -137,7 +138,14 @@ export default function HomePage() {
                 <MenuItem key={n} value={n}>{n}</MenuItem>
               ))}
             </TextField>
-            <Button variant="contained" onClick={handleCreateGame} disabled={createGameMutation.isPending}>
+            <TextField
+              label="Votre nom"
+              value={creatorName}
+              onChange={e => setCreatorName(e.target.value)}
+              size="small"
+              sx={{ width: 180 }}
+            />
+            <Button variant="contained" onClick={handleCreateGame} disabled={createGameMutation.isPending || !creatorName}>
               {createGameMutation.isPending ? <CircularProgress size={24} /> : 'Créer'}
             </Button>
           </Box>

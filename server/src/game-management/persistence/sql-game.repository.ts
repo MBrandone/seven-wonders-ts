@@ -4,6 +4,7 @@ import { Game } from '../domain/game.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { GameStatus } from '../domain/game-status.enum';
 import { GameRepository } from '../domain/game-repository.interface';
+import { Player } from '../domain/player.entity';
 
 @Injectable()
 export class SqlGameRepository implements GameRepository {
@@ -22,13 +23,14 @@ export class SqlGameRepository implements GameRepository {
     );
   }
 
-  async createGame(game: Game): Promise<Game> {
+  async createGame(game: Game, playerName: Player): Promise<Game> {
     await this.db.insertInto('games').values({
       id: game.id,
       created_at: game.createdAt,
       status: game.status,
       max_players: game.maxPlayers
     }).executeTakeFirst();
+    await this.addPlayerToGame(game, playerName.id);
     return game;
   }
 
@@ -48,10 +50,11 @@ export class SqlGameRepository implements GameRepository {
     return games;
   }
 
-  async addPlayerToGame(gameId: string, playerId: string): Promise<{ id: string; game_id: string; player_id: string }> {
+  async addPlayerToGame(game: Game, playerId: string): Promise<{ id: string; game_id: string; player_id: string }> {
     const id = crypto.randomUUID ? crypto.randomUUID() : require('uuid').v4();
-    await this.db.insertInto('game_players').values({ id, game_id: gameId, player_id: playerId }).executeTakeFirst();
-    return { id, game_id: gameId, player_id: playerId };
+    await this.db.insertInto('game_players').values({ id, game_id: game.id, player_id: playerId }).executeTakeFirst();
+    await this.db.updateTable('games').set({ status: game.status }).where('id', '=', game.id).executeTakeFirst();
+    return { id, game_id: game.id, player_id: playerId };
   }
 
 }

@@ -16,11 +16,16 @@ export class GameManagementService {
     private readonly eventEmitter: EventEmitter2,
   ) {}
 
-  async createGame(maxPlayers: number) {
+  async createGame(maxPlayers: number, playerName: string) {
     const id = uuidv4();
     const createdAt = new Date();
-    const game = Game.create(id, createdAt, maxPlayers, []);
-    await this.gameRepository.createGame(game);
+    let player = await this.playerRepository.findByName(playerName);
+    if (!player) {
+      player = new Player(uuidv4(), playerName, new Date());
+      await this.playerRepository.createPlayer(player);
+    }
+    const game = Game.create(id, createdAt, maxPlayers, [player.id]);
+    await this.gameRepository.createGame(game, player);
     return {
       id: game.id,
       created_at: game.createdAt,
@@ -45,7 +50,9 @@ export class GameManagementService {
       await this.playerRepository.createPlayer(player);
     }
 
-    const result = await this.gameRepository.addPlayerToGame(gameId, player.id);
+    game.addPlayer(player.id);
+
+    const result = await this.gameRepository.addPlayerToGame(game, player.id);
     this.eventEmitter.emit('player.joined', { gameId });
     return result;
   }
@@ -75,6 +82,7 @@ export class GameManagementService {
         return player ? { id: player.id, name: player.name } : null;
       })
     );
+
     return {
       id: game.id,
       created_at: game.createdAt,

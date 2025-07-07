@@ -18,6 +18,5 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     PlayerJoinedReactor
   ],
   controllers: [GameManagementController],
-  exports: [GameManagementService],
 })
 export class GameManagementModule {} 

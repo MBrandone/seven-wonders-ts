@@ -9,7 +9,6 @@ export class Game {
     public players: string[],
     public status: GameStatus
   ) {
-    this.status = GameStatus.WAITING;
     if (maxPlayers < 3 || maxPlayers > 7) {
       throw new Error('Un jeu doit avoir entre 3 et 7 joueurs maximum.');
     }
@@ -25,6 +24,13 @@ export class Game {
 
   canAddPlayer(): boolean {
     return this.players.length < this.maxPlayers;
+  }
+
+  addPlayer(playerId: string): void {
+    this.players.push(playerId);
+    if (this.players.length === this.maxPlayers) {
+      this.status = GameStatus.IN_PROGRESS;
+    }
   }
 
 } 

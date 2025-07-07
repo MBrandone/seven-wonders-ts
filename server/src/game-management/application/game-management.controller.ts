@@ -6,11 +6,14 @@ export class GameManagementController {
   constructor(private readonly gameService: GameManagementService) {}
 
   @Post()
-  async createGame(@Body('maxPlayers') maxPlayers: number) {
+  async createGame(@Body('maxPlayers') maxPlayers: number, @Body('playerName') playerName: string) {
     if (typeof maxPlayers !== 'number' || maxPlayers < 3 || maxPlayers > 7) {
       return { error: 'maxPlayers doit être un nombre entre 3 et 7' };
     }
-    return this.gameService.createGame(maxPlayers);
+    if (!playerName) {
+      return { error: 'playerName est requis.' };
+    }
+    return this.gameService.createGame(maxPlayers, playerName);
   }
 
   @Post(':gameId/players')

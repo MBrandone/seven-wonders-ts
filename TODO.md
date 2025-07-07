@@ -6,7 +6,18 @@
   - [X] Quand un joueur s'inscrit, on garde son adresse (IP, device ?) pour pouvoir le rediriger vers game/:gameid quand la partie est pleine.
   - [X] L'emission d'évènement par le serveur ne devrait pas être dans le GameService. Il faudrait créer un bus d'évènement qui répond à l'évènement "game full". Cet évènement est pivot entre Game Management & 7 Wonder Game.
   - [X] Renommer Game en game management ?
-  - [ ] La couche de services est dépendante de la persistence. Il faudrait créer des interfaces de Repository
+  - [X] La couche de services est dépendante de la persistence. Il faudrait créer des interfaces de Repository
+  - [X] Créer des tests e2e
+    - [X] Je crée une partie pour 3 joueurs, 2 joueurs se rajoutent à la partie, je récupère ma partie, et elle est en cours
+  - [X] Créer des tests de game-management service
+    - Tester tout les cas d'usages
+      - createGame
+        - Un joueur crée une partie, si son nom est connu, je crée la partie
+        - Un joueur crée une partie, si son nom est inconnu, je l'ajoute aux joueurs dispos et crée la partie
+      - addPlayerToGame
+      - listAvailableGame
+  - [ ] Créer des tests de player joined reactor
+  - [ ] Ne pas enregistrer des dates javascript dans la base de données
 
 ## 7 Wonders Game
 
@@ -19,6 +30,7 @@
     - [ ] Distribue les cartes
     - [ ] Redirige l'utilisateur vers la page de jeu
     - [ ] Chaque joueur a un plateau différent. On affiche uniquement les noms des merveilles dans un premier temps.
+- [ ] On ne devrait pas passer par des objets du domaine pour lire des données
 - [ ] Je vois mon plateau à l'endroit, et je vois le nombre de joueurs contre qui je joue par dessus.
     - [ ] Plus simple ? Affiche que mon plateau et faire jouer une carte au hasard aux autres joueurs
 
@@ -26,3 +38,4 @@
 
 - Deployer ?
 - Testabilité ?
+- Ouvrir et fermer la db quand tu joues les test e2e

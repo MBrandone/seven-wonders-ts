@@ -18,26 +18,42 @@
       - listAvailableGame
   - [X] Créer des tests de player joined reactor
   - [X] Un joueur ne peut pas rejoindre plusieurs fois une partie
-  - [ ] Créer une base de tests pour les test e2e
+  - [X] Créer une base de tests pour les test e2e
   - [ ] Ne pas enregistrer des dates javascript dans la base de données
 
 ## 7 Wonders Game
 
-- [ ] Créer un module seven wonders game
+- [X] Créer un module seven wonders game
+- [ ] L'évènement Game started : 
+- [ ] StartGameUsecase
+    - [X] assigne une merveille à chaque joueur au hasard
+    - [X] Distribue les cartes
+- [ ] PlayCardUseCase
+  - Jouer une carte
+    - [X] Le joueur prend la carte sur son plateau
+    - [ ] Le joueur ne peut pas jouer 2 fois la même carte
+    - [ ] Si la carte demande des ressources ou de l'argent, le joueur doit avoir les ressources nécessaires ou l'argent pour jouer la carte
+    - [ ] S'il n'a pas les ressources nécessaires, il peut acheter les ressources qui sont chez ses voisins et les payer 2 pièces
+  - [ ] Mettre une carte sous sa merveille
+  - [ ] Défausser une carte
+- [ ] NextTurn
+  - [ ] On passe les cartes à son voisin de gauche à l'age 1 et 3, et à son voisin de droite à l'age 2
+  - [ ] Si j'ai pris une carte qui me demande de payer quelques chose, la transaction est faite
+
+
 - [ ] La logique de récupérer tout les joueurs participants à une partie ne doit pas être dans le module Game, mais dans celui qui gère la partie de 7 wonders
 - [ ] L'évènement "player joined" peut générer un nouvel évènement "game started"
-- [ ] L'évènement Game started : 
-    - [ ] créer un plateau
-    - [ ] assigne une merveille à chaque joueur au hasard
-    - [ ] Distribue les cartes
+- [ ] On ne devrait pas passer par des objets du domaine pour lire des données
+- Quand le jeu a commencé (FRONT)
+  - [ ] Je vois mon plateau à l'endroit, et je vois le nombre de joueurs contre qui je joue par dessus.
+    - [ ] Plus simple ? Affiche que mon plateau et faire jouer une carte au hasard aux autres joueurs
+    - [ ] Je peux jouer n'importe quel carte (sans contraintes de ressources, duplicata de cartes) au départ
     - [ ] Redirige l'utilisateur vers la page de jeu
     - [ ] Chaque joueur a un plateau différent. On affiche uniquement les noms des merveilles dans un premier temps.
-- [ ] On ne devrait pas passer par des objets du domaine pour lire des données
-- [ ] Je vois mon plateau à l'endroit, et je vois le nombre de joueurs contre qui je joue par dessus.
-    - [ ] Plus simple ? Affiche que mon plateau et faire jouer une carte au hasard aux autres joueurs
 
 ## Transverse
 
 - Deployer ?
 - Testabilité ?
+- Pipeline de tests
 - Ouvrir et fermer la db quand tu joues les test e2e

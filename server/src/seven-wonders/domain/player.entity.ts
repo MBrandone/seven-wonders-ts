@@ -1,4 +1,4 @@
-import { Card } from "./card.value-object";
+import { Card } from "./cards/card.value-object";
 
 export type PlayerId = string;
 

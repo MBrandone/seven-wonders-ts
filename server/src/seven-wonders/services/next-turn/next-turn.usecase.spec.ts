@@ -1,8 +1,8 @@
 import { NextTurnUseCase } from './next-turn.usecase';
 import { SevenWondersGame } from '../../domain/seven-wonders-game';
 import { Player } from '../../domain/player.entity';
-import { Card, CardType } from '../../domain/card.value-object';
-import { Game } from 'src/game-management/domain/game.entity';
+import { Card } from '../../domain/cards/card.value-object';
+import { CardType } from '../../domain/cards/card-type';
 
 describe('NextTurnUseCase', () => {
     let game: SevenWondersGame;

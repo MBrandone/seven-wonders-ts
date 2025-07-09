@@ -37,8 +37,16 @@
   - [ ] Mettre une carte sous sa merveille
   - [ ] Défausser une carte
 - [ ] NextTurn
+  - [X] On passe à son voisin
   - [ ] On passe les cartes à son voisin de gauche à l'age 1 et 3, et à son voisin de droite à l'age 2
   - [ ] Si j'ai pris une carte qui me demande de payer quelques chose, la transaction est faite
+  - [ ] Si c'est le dernier tour, les cartes restantes vont dans la defausse
+- [ ] NextAge
+  - Fait la guerre
+  - Redistribue des nouvelles cartes
+- [ ] EndGame
+  - Compte les points
+  - Determine un classement
 
 
 - [ ] La logique de récupérer tout les joueurs participants à une partie ne doit pas être dans le module Game, mais dans celui qui gère la partie de 7 wonders

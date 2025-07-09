@@ -1,5 +1,6 @@
 import { Deck } from './deck.entity';
-import { ALL_CARDS, Card, CardType } from './card.value-object';
+import { ALL_CARDS } from "../cards/all-cards";
+import { CardType } from '../cards/card-type';
 
 describe('Deck', () => {
   let deck: Deck;

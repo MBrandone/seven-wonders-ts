@@ -1,7 +1,8 @@
 import { ChooseCardUseCase } from './choose-card.usecase';
 import { SevenWondersGame } from '../../domain/seven-wonders-game';
 import { Player } from '../../domain/player.entity';
-import { Card, CardType } from '../../domain/card.value-object';
+import { Card } from '../../domain/cards/card.value-object';
+import { CardType } from '../../domain/cards/card-type';
 
 describe('ChooseCardUseCase', () => {
     let usecase: ChooseCardUseCase;

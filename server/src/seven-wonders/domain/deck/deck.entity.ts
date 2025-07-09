@@ -1,4 +1,6 @@
-import { Card, CardType, ALL_CARDS } from './card.value-object';
+import { Card } from '../cards/card.value-object';
+import { ALL_CARDS } from "../cards/all-cards";
+import { CardType } from '../cards/card-type';
 
 export class Deck {
     private allCards: Card[];

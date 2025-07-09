@@ -1,8 +1,6 @@
-// Use-case pour démarrer une partie de Seven Wonders
-
-import { GameRepository } from "src/seven-wonders/domain/game-repository";
-import { ALL_CARDS } from "../../domain/card.value-object";
-import { Deck } from "../../domain/deck.entity";
+import { GameRepository } from "../../domain/game-repository";
+import { ALL_CARDS } from "../../domain/cards/all-cards";
+import { Deck } from "../../domain/deck/deck.entity";
 import { ALL_WONDERS } from "../../domain/wonder.entity";
 
 export class StartGameUseCase {

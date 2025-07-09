@@ -1,4 +1,4 @@
-import { Deck } from "./deck.entity";
+import { Deck } from "./deck/deck.entity";
 import { Player, PlayerId } from "./player.entity";
 import { Wonder } from "./wonder.entity";
 

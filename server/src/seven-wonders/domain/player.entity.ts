@@ -1,10 +1,12 @@
 import { Card } from "./cards/card.value-object";
+import { CardType } from "./cards/card-type";
 
 export type PlayerId = string;
 
 export class Player {
-
   private chosenCardToBePlayed: Card | null = null;
+  public warVictoryTokens: number = 0;
+  public warDefeatTokens: number = 0;
 
   constructor(
     public readonly id: PlayerId,
@@ -30,12 +32,25 @@ export class Player {
     if (!card) {
       throw new Error('Le joueur ne possède pas cette carte dans sa main');
     }
-
     this.chosenCardToBePlayed = card;
   }
 
   hasChosenCard() {
     return this.chosenCardToBePlayed !== null;
+  }
+
+  // Calcule la force militaire du joueur
+  militaryStrength(): number {
+    // On suppose que chaque carte militaire vaut 1 bouclier (à adapter si besoin)
+    return this.board.filter(card => card.type === CardType.MILITARY).length;
+  }
+
+  takeWarVictoryToken() {
+    this.warVictoryTokens++;
+  }
+
+  takeWarDefeatToken() {
+    this.warDefeatTokens++;
   }
 
   printBoard() {

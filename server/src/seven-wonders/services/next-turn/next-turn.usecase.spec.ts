@@ -15,9 +15,18 @@ describe('NextTurnUseCase', () => {
     const usecase = new NextTurnUseCase(mockedGameRepository);
     
     beforeEach(() => {
-        alice = new Player('1', 'Alice', [new Card('A', CardType.SCIENCE, 3, 1), new Card('B', CardType.SCIENCE, 3, 1)]);
-        bob = new Player('2', 'Bob', [new Card('C', CardType.SCIENCE, 3, 1), new Card('D', CardType.SCIENCE, 3, 1)]);
-        charlie = new Player('3', 'Charlie', [new Card('E', CardType.SCIENCE, 3, 1), new Card('F', CardType.SCIENCE, 3, 1)]);
+        const aliceCards = [new Card('A', CardType.SCIENCE, 3, 1), new Card('B', CardType.SCIENCE, 3, 1)];
+        alice = Player.create('1', 'Alice');
+        alice.takeCards(aliceCards)
+
+        const bobCards = [new Card('C', CardType.SCIENCE, 3, 1), new Card('D', CardType.SCIENCE, 3, 1)];
+        bob = Player.create('2', 'Bob');
+        bob.takeCards(bobCards);
+
+        const charlieCards = [new Card('E', CardType.SCIENCE, 3, 1), new Card('F', CardType.SCIENCE, 3, 1)];
+        charlie = Player.create('3', 'Charlie');
+        charlie.takeCards(charlieCards);
+
         game = new SevenWondersGame('game1', [alice, bob, charlie]);
     });
 

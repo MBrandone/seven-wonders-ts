@@ -3,6 +3,7 @@ import { SevenWondersGame } from '../../domain/seven-wonders-game';
 import { Player } from '../../domain/player.entity';
 import { Card } from '../../domain/cards/card.value-object';
 import { CardType } from '../../domain/cards/card-type';
+import {scriptorium1} from "../../domain/cards/all-cards";
 
 describe('ChooseCardUseCase', () => {
     let usecase: ChooseCardUseCase;
@@ -10,8 +11,8 @@ describe('ChooseCardUseCase', () => {
         findById: jest.fn((gameId: string) => gameId === 'game1' ? Promise.resolve(game) : Promise.resolve(null)),
     };
 
-    const scriptorium_card = new Card('Scriptorium', CardType.SCIENCE, 3, 1);
-    const alice = new Player('1', 'Alice', [scriptorium_card]);
+    const alice = Player.create('1', 'Alice');
+    alice.takeCards([scriptorium1])
     const game = new SevenWondersGame('game1', [alice]);
 
     usecase = new ChooseCardUseCase(mockedGameRepository);

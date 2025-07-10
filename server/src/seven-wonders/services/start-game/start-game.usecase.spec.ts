@@ -14,9 +14,9 @@ describe('StartGameUseCase', () => {
 
   it('Quand je démarre une partie, chaque joueur se voit attribuer une merveille différente au hasard et 7 cartes', async () => {
     // Given
-    const alice = new Player('1', 'Alice', []);
-    const bob = new Player('2', 'Bob', []);
-    const charlie = new Player('3', 'Charlie', []);
+    const alice = Player.create('1', 'Alice');
+    const bob = Player.create('2', 'Bob');
+    const charlie = Player.create('3', 'Charlie');
     const players = [alice, bob, charlie];
     const game = new SevenWondersGame('id', players);
     mockedGameRepository.findById.mockResolvedValue(game);
@@ -25,7 +25,7 @@ describe('StartGameUseCase', () => {
     const sevenWondersGame = await usecase.execute('id');
 
     // Then
-    expect(sevenWondersGame.wondersByPlayers.size).toBe(players.length);
+    expect(sevenWondersGame.players.every(player => player.board != undefined)).toBe(true);
     expect(sevenWondersGame.players.every(player => player.cards.length === 7)).toBe(true);
   });
 

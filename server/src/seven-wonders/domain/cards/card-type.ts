@@ -1,9 +1,9 @@
 export enum CardType {
-    CIVIL = 'Bâtiment Civil',
-    SCIENCE = 'Bâtiment Scientifique',
-    MILITARY = 'Bâtiment Militaire',
-    RAW_MATERIAL = 'Matière Première',
-    MANUFACTURED_GOOD = 'Produit Manufacturé',
-    COMMERCIAL = 'Bâtiment Commercial',
-    GUILD = 'Guilde',
-  }
+  CIVIL = 'CIVIL',
+  COMMERCIAL = 'COMMERCIAL',
+  MILITARY = 'MILITARY',
+  SCIENCE = 'SCIENCE',
+  GUILD = 'GUILD',
+  RAW_MATERIAL = 'RAW_MATERIAL',
+  MANUFACTURED_GOOD = 'MANUFACTURED_GOOD'
+}

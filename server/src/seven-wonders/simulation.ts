@@ -5,11 +5,12 @@ import { StartGameUseCase } from "./services/start-game/start-game.usecase";
 import { ChooseCardUseCase } from "./services/choose-card/choose-card.usecase";
 import { NextTurnUseCase } from "./services/next-turn/next-turn.usecase";
 import { NextAgeUseCase } from "./services/next-age/next-age.usecase";
+import {EndGameUsecase} from "./services/end-game/end-game.usecase";
 
 async function main() {
-    const alice = new Player('1', 'Alice', []);
-    const bob = new Player('2', 'Bob', []);
-    const charlie = new Player('3', 'Charlie', []);
+    const alice = Player.create('1', 'Alice');
+    const bob = Player.create('2', 'Bob');
+    const charlie = Player.create('3', 'Charlie');
 
     const gameId = 'game';
     const game = new SevenWondersGame(gameId, [alice, bob, charlie]);
@@ -48,8 +49,9 @@ async function main() {
     // Final War
     await nextAgeUseCase.execute(gameId);
     
-    // End Game (compter les points)
-
+    // End Game
+    await new EndGameUsecase(gameRepository).execute(gameId);
+    printPlayersScores(game.players)
 }
 
 main();
@@ -95,4 +97,10 @@ function printBoard(alice: Player, bob: Player, charlie: Player) {
     alice.printHand();
     bob.printHand();
     charlie.printHand();
+}
+
+function printPlayersScores(players: Player[]) {
+    players.forEach(player => {
+        console.log(`${player.name} a obtenu ${player.victoryPoints} points`)
+    })
 }

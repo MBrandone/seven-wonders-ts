@@ -5,18 +5,17 @@ import { Wonder } from "./wonder.entity";
 export class SevenWondersGame {
   wonders: Wonder[];
   deck: Deck;
-  wondersByPlayers: Map<PlayerId, Wonder> = new Map();
   currentAge: 1 | 2 | 3 = 1;
 
   constructor(
     public readonly id: string,
-    public readonly players: Player[],
+    public players: Player[],
   ) {}
 
   assignWonders(wonders: Wonder[]) {
     this.wonders = wonders.sort(() => Math.random() - 0.5);
     this.players.forEach((player, index) => {
-      this.wondersByPlayers.set(player.id, this.wonders[index]);
+      player.wonder = this.wonders[index];
     });
   }
 

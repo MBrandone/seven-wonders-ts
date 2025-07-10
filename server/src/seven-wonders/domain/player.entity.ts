@@ -1,69 +1,82 @@
-import { Card } from "./cards/card.value-object";
-import { CardType } from "./cards/card-type";
+import {Card} from "./cards/card.value-object";
+import {CardType} from "./cards/card-type";
+import {Wonder} from "./wonder.entity";
+import {MilitaryToken} from "./militaryToken";
 
 export type PlayerId = string;
 
 export class Player {
-  private chosenCardToBePlayed: Card | null = null;
-  public warVictoryTokens: number = 0;
-  public warDefeatTokens: number = 0;
+    private chosenCardToBePlayed: Card | null = null;
+    public warVictoryTokens: number = 0;
+    public warDefeatTokens: number = 0;
+    wonder: Wonder;
+    victoryPoints: number;
 
-  constructor(
-    public readonly id: PlayerId,
-    public readonly name: string,
-    public cards: Card[],
-    public board: Card[] = []
-  ) { }
-
-  takeCards(cards: Card[]) {
-    this.cards = cards;
-  }
-
-  playCard() {
-    if (this.chosenCardToBePlayed) {
-      this.cards = this.cards.filter(c => c.name !== this.chosenCardToBePlayed!.name);
-      this.board.push(this.chosenCardToBePlayed);
-      this.chosenCardToBePlayed = null;
+    private constructor(
+        public readonly id: PlayerId,
+        public readonly name: string,
+        public cards: Card[],
+        public board: Card[] = [],
+        public coins: number = 0,
+        public militaryTokens: MilitaryToken[] = [],
+    ) {
     }
-  }
 
-  chooseCardToBePlayed(wantedCardName: string) {
-    const card = this.cards.find(ownedCard => ownedCard.name === wantedCardName);
-    if (!card) {
-      throw new Error('Le joueur ne possède pas cette carte dans sa main');
+    static create(id: PlayerId, name: string): Player {
+        return new Player(id, name, [], [], 3, []);
     }
-    this.chosenCardToBePlayed = card;
-  }
 
-  hasChosenCard() {
-    return this.chosenCardToBePlayed !== null;
-  }
+    static hydrate(id: PlayerId, name: string, cards: Card[], board: Card[], coins: number, militaryTokens: MilitaryToken[]) {
+        return new Player(id, name, cards, board, coins, militaryTokens);
+    }
 
-  // Calcule la force militaire du joueur
-  militaryStrength(): number {
-    // On suppose que chaque carte militaire vaut 1 bouclier (à adapter si besoin)
-    return this.board.filter(card => card.type === CardType.MILITARY).length;
-  }
+    takeCards(cards: Card[]) {
+        this.cards = cards;
+    }
 
-  takeWarVictoryToken() {
-    this.warVictoryTokens++;
-  }
+    playCard() {
+        if (this.chosenCardToBePlayed) {
+            this.cards = this.cards.filter(c => c.name !== this.chosenCardToBePlayed!.name);
+            this.board.push(this.chosenCardToBePlayed);
+            this.chosenCardToBePlayed = null;
+        }
+    }
 
-  takeWarDefeatToken() {
-    this.warDefeatTokens++;
-  }
+    chooseCardToBePlayed(wantedCardName: string) {
+        const card = this.cards.find(ownedCard => ownedCard.name === wantedCardName);
+        if (!card) {
+            throw new Error('Le joueur ne possède pas cette carte dans sa main');
+        }
+        this.chosenCardToBePlayed = card;
+    }
 
-  printBoard() {
-    console.log(`${this.name} a ${this.board.length} cartes sur son plateau :`);
-    this.board.forEach(card => {
-      console.log(`- ${card.name}`);
-    });
-  }
+    hasChosenCard() {
+        return this.chosenCardToBePlayed !== null;
+    }
 
-  printHand() {
-    console.log(`${this.name} a ${this.cards.length} cartes dans sa main :`);
-    this.cards.forEach(card => {
-      console.log(`- ${card.name}`);
-    });
-  }
-} 
+    militaryStrength(): number {
+        return this.board.filter(card => card.type === CardType.MILITARY).length;
+    }
+
+    takeWarVictoryToken() {
+        this.warVictoryTokens++;
+    }
+
+    takeWarDefeatToken() {
+        this.warDefeatTokens++;
+    }
+
+    printBoard() {
+        console.log(`${this.name} a ${this.board.length} cartes sur son plateau :`);
+        this.board.forEach(card => {
+            console.log(`- ${card.name}`);
+        });
+    }
+
+    printHand() {
+        console.log(`${this.name} a ${this.cards.length} cartes dans sa main :`);
+        this.cards.forEach(card => {
+            console.log(`- ${card.name}`);
+        });
+    }
+}

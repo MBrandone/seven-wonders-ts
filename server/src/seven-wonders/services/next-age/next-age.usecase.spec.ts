@@ -8,7 +8,6 @@ import { ALL_CARDS } from '../../domain/cards/all-cards';
 import { GameRepository } from 'src/seven-wonders/domain/game-repository';
 
 describe('NextAgeUseCase', () => {
-    let usecase: NextAgeUseCase;
     let p1: Player;
     let p2: Player;
     let p3: Player;
@@ -17,14 +16,18 @@ describe('NextAgeUseCase', () => {
     let mockedGameRepository: GameRepository;
 
     beforeEach(() => {
-        p1 = new Player('1', 'Alice', [], [
+        const p1Board = [
             new Card('Caserne', CardType.MILITARY, 3, 1),
             new Card('Tour de garde', CardType.MILITARY, 3, 1),
-        ]);
-        p2 = new Player('2', 'Bob', [], [
+        ];
+        p1 = Player.hydrate('1', 'Alice', [], p1Board, 0, []);
+
+        const p2Board = [
             new Card('Caserne', CardType.MILITARY, 3, 1),
-        ]);
-        p3 = new Player('3', 'Charlie', [], []);
+        ];
+        p2 = Player.hydrate('2', 'Bob', [], p2Board, 0, []);
+
+        p3 = Player.hydrate('3', 'Charlie',  [], [], 0, []);
         const players = [p1, p2, p3];
     
         deck = new Deck(ALL_CARDS);
@@ -34,8 +37,6 @@ describe('NextAgeUseCase', () => {
             findById: jest.fn((gameId: string) => gameId === 'game1' ? Promise.resolve(game) : Promise.resolve(null)),
         };
     })
-
-    // Given
 
     it('attribue les jetons de guerre correctement', async () => {
         // When

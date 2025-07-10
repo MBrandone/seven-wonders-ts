@@ -1,10 +1,10 @@
-import { Kysely } from 'kysely';
-import { Database } from '../../database/database.types';
-import { Game } from '../domain/game.entity';
 import { Inject, Injectable } from '@nestjs/common';
-import { GameStatus } from '../domain/game-status.enum';
-import { GameRepository } from '../domain/game-repository.interface';
-import { Player } from '../domain/player.entity';
+import type { Kysely } from 'kysely';
+import type { Database } from '../../database/database.types';
+import { Game } from '../domain/game.entity';
+import type { GameRepository } from '../domain/game-repository.interface';
+import type { GameStatus } from '../domain/game-status.enum';
+import type { Player } from '../domain/player.entity';
 
 @Injectable()
 export class SqlGameRepository implements GameRepository {

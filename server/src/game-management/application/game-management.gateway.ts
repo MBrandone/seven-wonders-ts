@@ -1,5 +1,5 @@
-import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, MessageBody, ConnectedSocket } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { ConnectedSocket, MessageBody, type OnGatewayConnection, type OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import type { Server } from 'socket.io';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class GameManagementGateway implements OnGatewayConnection, OnGatewayDisconnect {

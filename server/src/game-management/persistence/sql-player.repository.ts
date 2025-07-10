@@ -1,8 +1,8 @@
-import { Kysely } from 'kysely';
-import { Database } from '../../database/database.types';
-import { Player } from '../domain/player.entity';
 import { Inject, Injectable } from '@nestjs/common';
-import { PlayerRepository } from '../domain/player-repository.interface';
+import type { Kysely } from 'kysely';
+import type { Database } from '../../database/database.types';
+import { Player } from '../domain/player.entity';
+import type { PlayerRepository } from '../domain/player-repository.interface';
 
 @Injectable()
 export class SqlPlayerRepository implements PlayerRepository {

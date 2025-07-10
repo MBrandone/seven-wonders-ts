@@ -1,5 +1,5 @@
 export interface MilitaryToken {
-    age: number;
-    isDefeat: boolean;
-    points: number;
+	age: number;
+	isDefeat: boolean;
+	points: number;
 }

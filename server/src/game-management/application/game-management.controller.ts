@@ -1,5 +1,5 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
-import { GameManagementService } from '../services/game-management.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import type { GameManagementService } from '../services/game-management.service';
 
 @Controller('games')
 export class GameManagementController {

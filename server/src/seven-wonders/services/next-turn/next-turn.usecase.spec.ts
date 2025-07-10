@@ -1,84 +1,95 @@
-import { NextTurnUseCase } from './next-turn.usecase';
-import { SevenWondersGame } from '../../domain/seven-wonders-game';
-import { Player } from '../../domain/player.entity';
-import { Card } from '../../domain/cards/card.value-object';
-import { CardType } from '../../domain/cards/card-type';
+import { Card } from "../../domain/cards/card.value-object";
+import { CardType } from "../../domain/cards/card-type";
+import { Player } from "../../domain/player.entity";
+import { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { NextTurnUseCase } from "./next-turn.usecase";
 
-describe('NextTurnUseCase', () => {
-    let game: SevenWondersGame;
-    let alice: Player;
-    let bob: Player;
-    let charlie: Player;
-    const mockedGameRepository = {
-        findById: jest.fn((gameId: string) => gameId === 'game1' ? Promise.resolve(game) : Promise.resolve(null)),
-    };
-    const usecase = new NextTurnUseCase(mockedGameRepository);
-    
-    beforeEach(() => {
-        const aliceCards = [new Card('A', CardType.SCIENCE, 3, 1), new Card('B', CardType.SCIENCE, 3, 1)];
-        alice = Player.create('1', 'Alice');
-        alice.takeCards(aliceCards)
+describe("NextTurnUseCase", () => {
+	let game: SevenWondersGame;
+	let alice: Player;
+	let bob: Player;
+	let charlie: Player;
+	const mockedGameRepository = {
+		findById: jest.fn((gameId: string) =>
+			gameId === "game1" ? Promise.resolve(game) : Promise.resolve(null),
+		),
+	};
+	const usecase = new NextTurnUseCase(mockedGameRepository);
 
-        const bobCards = [new Card('C', CardType.SCIENCE, 3, 1), new Card('D', CardType.SCIENCE, 3, 1)];
-        bob = Player.create('2', 'Bob');
-        bob.takeCards(bobCards);
+	beforeEach(() => {
+		const aliceCards = [
+			new Card("A", CardType.SCIENCE, 3, 1),
+			new Card("B", CardType.SCIENCE, 3, 1),
+		];
+		alice = Player.create("1", "Alice");
+		alice.takeCards(aliceCards);
 
-        const charlieCards = [new Card('E', CardType.SCIENCE, 3, 1), new Card('F', CardType.SCIENCE, 3, 1)];
-        charlie = Player.create('3', 'Charlie');
-        charlie.takeCards(charlieCards);
+		const bobCards = [
+			new Card("C", CardType.SCIENCE, 3, 1),
+			new Card("D", CardType.SCIENCE, 3, 1),
+		];
+		bob = Player.create("2", "Bob");
+		bob.takeCards(bobCards);
 
-        game = new SevenWondersGame('game1', [alice, bob, charlie]);
-    });
+		const charlieCards = [
+			new Card("E", CardType.SCIENCE, 3, 1),
+			new Card("F", CardType.SCIENCE, 3, 1),
+		];
+		charlie = Player.create("3", "Charlie");
+		charlie.takeCards(charlieCards);
 
-    it('lève une erreur si un des joueurs n\'a pas joué de carte', async () => {
-        // Given
-        alice.chooseCardToBePlayed('A');
-        bob.chooseCardToBePlayed('C');
+		game = new SevenWondersGame("game1", [alice, bob, charlie]);
+	});
 
-        // When
-        await expect(() => usecase.execute('game1'))
+	it("lève une erreur si un des joueurs n'a pas joué de carte", async () => {
+		// Given
+		alice.chooseCardToBePlayed("A");
+		bob.chooseCardToBePlayed("C");
 
-        // Then
-        .rejects.toThrow('Tous les joueurs doivent avoir joué une carte');
-    });
+		// When
+		await expect(() => usecase.execute("game1"))
 
-    it('retire la carte choisie du joueur, et la met sur son plateau', async () => {
-        // Given
-        alice.chooseCardToBePlayed('A');
-        bob.chooseCardToBePlayed('C');
-        charlie.chooseCardToBePlayed('E');
+			// Then
+			.rejects.toThrow("Tous les joueurs doivent avoir joué une carte");
+	});
 
-        // When
-        await usecase.execute('game1');
+	it("retire la carte choisie du joueur, et la met sur son plateau", async () => {
+		// Given
+		alice.chooseCardToBePlayed("A");
+		bob.chooseCardToBePlayed("C");
+		charlie.chooseCardToBePlayed("E");
 
-        // Then
-        expect(alice.board.length).toBe(1);
-        expect(alice.board[0].name).toBe('A');
+		// When
+		await usecase.execute("game1");
 
-        expect(bob.board.length).toBe(1);
-        expect(bob.board[0].name).toBe('C');
+		// Then
+		expect(alice.board.length).toBe(1);
+		expect(alice.board[0].name).toBe("A");
 
-        expect(charlie.board.length).toBe(1);
-        expect(charlie.board[0].name).toBe('E');
-    });
+		expect(bob.board.length).toBe(1);
+		expect(bob.board[0].name).toBe("C");
 
-    it('fait passer les cartes en main d\'un joueur à son voisin', async () => {
-        // Given
-        alice.chooseCardToBePlayed('A');
-        bob.chooseCardToBePlayed('C');
-        charlie.chooseCardToBePlayed('E');
+		expect(charlie.board.length).toBe(1);
+		expect(charlie.board[0].name).toBe("E");
+	});
 
-        // When
-        await usecase.execute('game1');
+	it("fait passer les cartes en main d'un joueur à son voisin", async () => {
+		// Given
+		alice.chooseCardToBePlayed("A");
+		bob.chooseCardToBePlayed("C");
+		charlie.chooseCardToBePlayed("E");
 
-        // Then
-        // Alice doit avoir la main de Bob (D)
-        expect(alice.cards.map(c => c.name)).toEqual(['F']);
+		// When
+		await usecase.execute("game1");
 
-        // Bob doit avoir la main de Charlie (F)
-        expect(bob.cards.map(c => c.name)).toEqual(['B']);
+		// Then
+		// Alice doit avoir la main de Bob (D)
+		expect(alice.cards.map((c) => c.name)).toEqual(["F"]);
 
-        // Charlie doit avoir la main d'Alice (B)
-        expect(charlie.cards.map(c => c.name)).toEqual(['D']);
-    });
-}); 
+		// Bob doit avoir la main de Charlie (F)
+		expect(bob.cards.map((c) => c.name)).toEqual(["B"]);
+
+		// Charlie doit avoir la main d'Alice (B)
+		expect(charlie.cards.map((c) => c.name)).toEqual(["D"]);
+	});
+});

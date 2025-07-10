@@ -31,10 +31,10 @@ describe("PlayerJoinedReactor", () => {
 				if (id === "g2") return Promise.resolve(waitingGame);
 				return Promise.resolve(null);
 			}),
-		} as any;
+		} as unknown as jest.Mocked<GameRepository>;
 		gameGateway = {
 			emitGameFull: jest.fn(),
-		} as any;
+		} as unknown as jest.Mocked<GameManagementGateway>;
 		reactor = new PlayerJoinedReactor(gameRepository, gameGateway);
 	});
 

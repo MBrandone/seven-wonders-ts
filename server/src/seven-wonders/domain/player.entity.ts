@@ -43,7 +43,7 @@ export class Player {
 	playCard() {
 		if (this.chosenCardToBePlayed) {
 			this.cards = this.cards.filter(
-				(c) => c.name !== this.chosenCardToBePlayed!.name,
+				(card) => card.name !== this.chosenCardToBePlayed?.name,
 			);
 			this.board.push(this.chosenCardToBePlayed);
 			this.chosenCardToBePlayed = null;

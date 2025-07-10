@@ -74,7 +74,7 @@ describe("GameManagementService", () => {
 
 		it("crée une partie et un joueur si le nom est inconnu", async () => {
 			// When
-			const result = await service.createGame(3, "Bob");
+			await service.createGame(3, "Bob");
 
 			// Then
 			expect(playerRepository.findByName).toHaveBeenCalledWith("Bob");

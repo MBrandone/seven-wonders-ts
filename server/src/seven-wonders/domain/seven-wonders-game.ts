@@ -1,5 +1,5 @@
 import type { Deck } from "./deck/deck.entity";
-import { type Player, PlayerId } from "./player.entity";
+import type { Player } from "./player.entity";
 import type { Wonder } from "./wonder.entity";
 
 export class SevenWondersGame {

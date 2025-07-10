@@ -1,12 +1,9 @@
 import { scriptorium1 } from "../../domain/cards/all-cards";
-import { Card } from "../../domain/cards/card.value-object";
-import { CardType } from "../../domain/cards/card-type";
 import { Player } from "../../domain/player.entity";
 import { SevenWondersGame } from "../../domain/seven-wonders-game";
 import { ChooseCardUseCase } from "./choose-card.usecase";
 
 describe("ChooseCardUseCase", () => {
-	let usecase: ChooseCardUseCase;
 	const mockedGameRepository = {
 		findById: jest.fn((gameId: string) =>
 			gameId === "game1" ? Promise.resolve(game) : Promise.resolve(null),
@@ -17,7 +14,7 @@ describe("ChooseCardUseCase", () => {
 	alice.takeCards([scriptorium1]);
 	const game = new SevenWondersGame("game1", [alice]);
 
-	usecase = new ChooseCardUseCase(mockedGameRepository);
+	const usecase = new ChooseCardUseCase(mockedGameRepository);
 
 	afterEach(() => {
 		jest.restoreAllMocks();

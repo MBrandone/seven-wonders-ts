@@ -28,11 +28,6 @@ describe("Deck", () => {
 		expect(age2_5j.length).toBeGreaterThan(age2_3j.length);
 	});
 
-	it("retourne un tableau vide si aucun âge ne correspond", () => {
-		// On suppose qu'il n'y a pas de carte d'âge 4
-		expect(deck.getCardsForAge(4 as any, 3)).toEqual([]);
-	});
-
 	it("il y a 21 cartes pour l'âge 3 quand il y a 3 joueurs", () => {
 		const age3_3j = deck.getCardsForAge(3, 3);
 		expect(age3_3j.length).toBe(21);

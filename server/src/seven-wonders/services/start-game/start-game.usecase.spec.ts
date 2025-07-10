@@ -26,7 +26,7 @@ describe("StartGameUseCase", () => {
 
 		// Then
 		expect(
-			sevenWondersGame.players.every((player) => player.board != undefined),
+			sevenWondersGame.players.every((player) => player.board !== undefined),
 		).toBe(true);
 		expect(
 			sevenWondersGame.players.every((player) => player.cards.length === 7),

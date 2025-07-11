@@ -1,4 +1,4 @@
-import { ALL_CARDS } from "../cards/all-cards";
+import { ALL_CARDS } from "../cards/all-cards/all-cards";
 import type { Card } from "../cards/card.value-object";
 import { CardType } from "../cards/card-type";
 

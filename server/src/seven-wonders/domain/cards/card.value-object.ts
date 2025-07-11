@@ -1,5 +1,6 @@
+import type { Player } from "../player.entity";
+import type { SevenWondersGame } from "../seven-wonders-game";
 import { CardType } from "./card-type";
-import type { ScienceSymbol } from "./science-symbol";
 
 export class Card {
 	constructor(
@@ -11,35 +12,14 @@ export class Card {
 	) {}
 }
 
-export class CivilianCard extends Card {
+export class CommercialCard extends Card {
 	constructor(
-		public name: string,
-		public minPlayers: number,
-		public age: 1 | 2 | 3,
-		public readonly civilizationPoints: number,
+		public readonly name: string,
+		public readonly minPlayers: number,
+		public readonly age: 1 | 2 | 3,
+		public readonly civilizationPointsEarned: (player: Player) => number,
+		public coinsEarned: (game: SevenWondersGame) => number,
 	) {
-		super(name, CardType.CIVIL, minPlayers, age);
-	}
-}
-
-export class MilitaryCard extends Card {
-	constructor(
-		public name: string,
-		public minPlayers: number,
-		public age: 1 | 2 | 3,
-		public readonly militaryPoints: number,
-	) {
-		super(name, CardType.MILITARY, minPlayers, age);
-	}
-}
-
-export class ScienceCard extends Card {
-	constructor(
-		public name: string,
-		public minPlayers: number,
-		public age: 1 | 2 | 3,
-		public readonly scienceSymbol: ScienceSymbol,
-	) {
-		super(name, CardType.SCIENCE, minPlayers, age);
+		super(name, CardType.COMMERCIAL, minPlayers, age);
 	}
 }

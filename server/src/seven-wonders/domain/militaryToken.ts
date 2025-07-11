@@ -1,5 +1,3 @@
-export interface MilitaryToken {
-	age: number;
-	isDefeat: boolean;
-	points: number;
+export class MilitaryToken {
+	constructor(public points: number) {}
 }

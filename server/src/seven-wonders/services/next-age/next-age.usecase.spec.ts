@@ -1,5 +1,5 @@
 import type { GameRepository } from "src/seven-wonders/domain/game-repository";
-import { ALL_CARDS } from "../../domain/cards/all-cards";
+import { ALL_CARDS } from "../../domain/cards/all-cards/all-cards";
 import { Card } from "../../domain/cards/card.value-object";
 import { CardType } from "../../domain/cards/card-type";
 import { Deck } from "../../domain/deck/deck.entity";
@@ -20,12 +20,33 @@ describe("NextAgeUseCase", () => {
 			new Card("Caserne", CardType.MILITARY, 3, 1),
 			new Card("Tour de garde", CardType.MILITARY, 3, 1),
 		];
-		p1 = Player.hydrate("1", "Alice", [], p1Board, 0, []);
+		p1 = Player.hydrate({
+			id: "1",
+			name: "Alice",
+			cards: [],
+			board: p1Board,
+			coins: 0,
+			militaryTokens: [],
+		});
 
 		const p2Board = [new Card("Caserne", CardType.MILITARY, 3, 1)];
-		p2 = Player.hydrate("2", "Bob", [], p2Board, 0, []);
+		p2 = Player.hydrate({
+			id: "2",
+			name: "Bob",
+			cards: [],
+			board: p2Board,
+			coins: 0,
+			militaryTokens: [],
+		});
 
-		p3 = Player.hydrate("3", "Charlie", [], [], 0, []);
+		p3 = Player.hydrate({
+			id: "3",
+			name: "Charlie",
+			cards: [],
+			board: [],
+			coins: 0,
+			militaryTokens: [],
+		});
 		const players = [p1, p2, p3];
 
 		deck = new Deck(ALL_CARDS);

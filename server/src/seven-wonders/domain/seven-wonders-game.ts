@@ -67,4 +67,18 @@ export class SevenWondersGame {
 			player.takeWarDefeatToken();
 		}
 	}
+
+	getNeighbours(player: Player) {
+		const index = this.players.findIndex(
+			(playerInGame) => playerInGame === player,
+		);
+		const playerLength = this.players.length;
+		if (index === 0) {
+			return [this.players[1], this.players[playerLength - 1]];
+		} else if (index === playerLength - 1) {
+			return [this.players[0], this.players[playerLength - 2]];
+		} else {
+			return [this.players[index - 1], this.players[index + 1]];
+		}
+	}
 }

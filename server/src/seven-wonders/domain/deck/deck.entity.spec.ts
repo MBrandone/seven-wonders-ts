@@ -1,4 +1,4 @@
-import { ALL_CARDS } from "../cards/all-cards";
+import { ALL_CARDS } from "../cards/all-cards/all-cards";
 import { CardType } from "../cards/card-type";
 import { Deck } from "./deck.entity";
 

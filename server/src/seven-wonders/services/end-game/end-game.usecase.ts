@@ -1,14 +1,16 @@
-import type {
-	CivilianCard,
-	ScienceCard,
-} from "../../domain/cards/card.value-object";
 import { CardType } from "../../domain/cards/card-type";
+import type { CivilianCard } from "../../domain/cards/civilian-card";
+import type { ScienceCard } from "../../domain/cards/science-card";
 import { ScienceSymbol } from "../../domain/cards/science-symbol";
 import type { GameRepository } from "../../domain/game-repository";
 import type { Player } from "../../domain/player.entity";
+import type { PointCalculatorService } from "../point-calculator/point-calculator.service";
 
 export class EndGameUsecase {
-	constructor(private readonly gameRepository: GameRepository) {}
+	constructor(
+		private readonly gameRepository: GameRepository,
+		private readonly pointsCalculator: PointCalculatorService,
+	) {}
 
 	async execute(gameId: string): Promise<void> {
 		const game = await this.gameRepository.findById(gameId);
@@ -22,7 +24,8 @@ export class EndGameUsecase {
 			const coinPoints = Math.floor(player.coins / 3);
 			const militaryPoints = this.calculateMilitaryPoints(player);
 			const civilianPoints = this.calculateCivilianPoints(player);
-			const commercialPoints = this.calculateCommercialPoints(player);
+			const commercialPoints =
+				this.pointsCalculator.calculateCommercialPoints(player);
 			const sciencePoints = this.calculateSciencePoints(player);
 			const guildPoints = this.calculateGuildPoints(player);
 
@@ -44,44 +47,17 @@ export class EndGameUsecase {
 	}
 
 	private calculateMilitaryPoints(player: Player): number {
-		let points = 0;
-
-		// Comptage des jetons militaires par âge
-		for (const token of player.militaryTokens) {
-			if (token.isDefeat) {
-				points -= 1; // Jeton de défaite: -1 point
-			} else {
-				// Jeton de victoire: points selon l'âge
-				switch (token.age) {
-					case 1:
-						points += 1;
-						break;
-					case 2:
-						points += 3;
-						break;
-					case 3:
-						points += 5;
-						break;
-				}
-			}
-		}
-
-		return points;
+		return player.militaryTokens
+			.map((militaryToken) => militaryToken.points)
+			.reduce(
+				(accumulateur, valeurCourante) => accumulateur + valeurCourante,
+				0,
+			);
 	}
 
 	private calculateCivilianPoints(player: Player): number {
-		const civilianPoints = player.board
-			.filter((card) => card.type === CardType.CIVIL)
-			.reduce(
-				(sum, card: CivilianCard) => sum + (card.civilizationPoints || 0),
-				0,
-			);
-		return civilianPoints;
-	}
-
-	private calculateCommercialPoints(player: Player): number {
 		return player.board
-			.filter((card) => card.type === CardType.COMMERCIAL)
+			.filter((card) => card.type === CardType.CIVIL)
 			.reduce(
 				(sum, card: CivilianCard) => sum + (card.civilizationPoints || 0),
 				0,

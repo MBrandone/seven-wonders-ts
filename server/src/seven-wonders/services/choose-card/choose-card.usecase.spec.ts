@@ -1,4 +1,4 @@
-import { scriptorium1 } from "../../domain/cards/all-cards";
+import { scriptorium1 } from "../../domain/cards/all-cards/science";
 import { Player } from "../../domain/player.entity";
 import { SevenWondersGame } from "../../domain/seven-wonders-game";
 import { ChooseCardUseCase } from "./choose-card.usecase";

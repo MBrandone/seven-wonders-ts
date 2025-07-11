@@ -1,15 +1,15 @@
-import {
-	Card,
-	CivilianCard,
-	ScienceCard,
-} from "../../domain/cards/card.value-object";
+import { Card, CommercialCard } from "../../domain/cards/card.value-object";
 import { CardType } from "../../domain/cards/card-type";
+import { CivilianCard } from "../../domain/cards/civilian-card";
+import { ScienceCard } from "../../domain/cards/science-card";
 import { ScienceSymbol } from "../../domain/cards/science-symbol";
 import type { GameRepository } from "../../domain/game-repository";
+import { MilitaryToken } from "../../domain/militaryToken";
 import { Player } from "../../domain/player.entity";
 import { Resource } from "../../domain/resource";
 import { SevenWondersGame } from "../../domain/seven-wonders-game";
 import { Wonder, WonderStage } from "../../domain/wonder.entity";
+import { PointCalculatorService } from "../point-calculator/point-calculator.service";
 import { EndGameUsecase } from "./end-game.usecase";
 
 describe("EndGameUsecase", () => {
@@ -22,53 +22,55 @@ describe("EndGameUsecase", () => {
 			save: jest.fn(),
 		} as unknown as jest.Mocked<GameRepository>;
 
-		usecase = new EndGameUsecase(gameRepository);
+		usecase = new EndGameUsecase(gameRepository, new PointCalculatorService());
 	});
 
 	it("should calculate victory points correctly for each player", async () => {
 		// Given
-		const player1 = Player.hydrate(
-			"id1",
-			"Player1",
-			[],
-			[
+		const player1 = Player.hydrate({
+			id: "id1",
+			name: "Player1",
+			cards: [],
+			board: [
 				new CivilianCard("", 1, 1, 3),
 				new CivilianCard("", 1, 1, 5),
 				new ScienceCard("", 1, 1, ScienceSymbol.TABLET),
 				new ScienceCard("", 1, 1, ScienceSymbol.COMPASS),
-				new Card("one name", CardType.COMMERCIAL, 1, 1, 2),
+				new CommercialCard(
+					"one name",
+					1,
+					1,
+					() => 2,
+					() => 0,
+				),
 				new Card("one name", CardType.GUILD, 1, 1, 4),
 			],
-			10,
-			[],
-		);
+			coins: 10,
+			militaryTokens: [
+				new MilitaryToken(1),
+				new MilitaryToken(3),
+				new MilitaryToken(-1),
+			],
+		});
 
-		const player2 = Player.hydrate(
-			"id1",
-			"Player2",
-			[],
-			[
+		const player2 = Player.hydrate({
+			id: "id1",
+			name: "Player2",
+			cards: [],
+			board: [
 				new CivilianCard("", 1, 1, 2),
 				new ScienceCard("", 1, 1, ScienceSymbol.TABLET),
 				new ScienceCard("", 1, 1, ScienceSymbol.TABLET),
 				new ScienceCard("", 1, 1, ScienceSymbol.WHEEL),
 				new Card("one name", CardType.GUILD, 1, 1, 3),
 			],
-			7,
-			[],
-		);
-
-		player1.militaryTokens = [
-			{ age: 1, isDefeat: false },
-			{ age: 2, isDefeat: false },
-			{ age: 3, isDefeat: true },
-		];
-
-		player2.militaryTokens = [
-			{ age: 1, isDefeat: true },
-			{ age: 2, isDefeat: true },
-			{ age: 3, isDefeat: false },
-		];
+			coins: 7,
+			militaryTokens: [
+				new MilitaryToken(-1),
+				new MilitaryToken(-1),
+				new MilitaryToken(5),
+			],
+		});
 
 		player1.wonder = new Wonder("Wonder", Resource.ARGILE, [
 			new WonderStage(true, 3),

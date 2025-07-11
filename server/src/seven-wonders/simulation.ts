@@ -5,6 +5,7 @@ import { ChooseCardUseCase } from "./services/choose-card/choose-card.usecase";
 import { EndGameUsecase } from "./services/end-game/end-game.usecase";
 import { NextAgeUseCase } from "./services/next-age/next-age.usecase";
 import { NextTurnUseCase } from "./services/next-turn/next-turn.usecase";
+import { PointCalculatorService } from "./services/point-calculator/point-calculator.service";
 import { StartGameUseCase } from "./services/start-game/start-game.usecase";
 
 async function main() {
@@ -50,7 +51,10 @@ async function main() {
 	await nextAgeUseCase.execute(gameId);
 
 	// End Game
-	await new EndGameUsecase(gameRepository).execute(gameId);
+	await new EndGameUsecase(
+		gameRepository,
+		new PointCalculatorService(),
+	).execute(gameId);
 	printPlayersScores(game.players);
 }
 

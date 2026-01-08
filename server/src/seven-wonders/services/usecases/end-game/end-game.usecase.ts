@@ -1,10 +1,13 @@
-import { CardType } from "../../domain/cards/card-type";
-import type { CivilianCard } from "../../domain/cards/civilian-card";
-import type { ScienceCard } from "../../domain/cards/science-card";
-import { ScienceSymbol } from "../../domain/cards/science-symbol";
-import type { SevenWondersGameRepository } from "../../domain/game-repository";
-import type { Player } from "../../domain/player.entity";
-import type { PointCalculatorService } from "../point-calculator/point-calculator.service";
+import { WonderStage } from "../../../domain/wonder.entity";
+import { CardType } from "../../../domain/cards/card-type";
+import type { CivilianCard } from "../../../domain/cards/civilian-card";
+import type { ScienceCard } from "../../../domain/cards/science-card";
+import { ScienceSymbol } from "../../../domain/cards/science-symbol";
+import type { SevenWondersGameRepository } from "../../../domain/game-repository";
+import type { Player } from "../../../domain/player.entity";
+import type { PointCalculatorService } from "../../point-calculator/point-calculator.service";
+import { MilitaryToken } from "../../../domain/militaryToken";
+import { Card } from "../../../domain/cards/card.value-object";
 
 export class EndGameUsecase {
 	constructor(
@@ -42,40 +45,40 @@ export class EndGameUsecase {
 
 	private calculateWonderPoints(player: Player): number {
 		return player.wonder.stages
-			.filter((stage) => stage.isBuilt)
-			.reduce((sum, stage) => sum + (stage.civilizationPoints || 0), 0);
+			.filter((stage: WonderStage) => stage.isBuilt)
+			.reduce((sum: number, stage: WonderStage) => sum + (stage.civilizationPoints || 0), 0);
 	}
 
 	private calculateMilitaryPoints(player: Player): number {
 		return player.militaryTokens
-			.map((militaryToken) => militaryToken.points)
+			.map((militaryToken: MilitaryToken) => militaryToken.points)
 			.reduce(
-				(accumulateur, valeurCourante) => accumulateur + valeurCourante,
+				(accumulateur: number, valeurCourante: number) => accumulateur + valeurCourante,
 				0,
 			);
 	}
 
 	private calculateCivilianPoints(player: Player): number {
 		return player.board
-			.filter((card) => card.type === CardType.CIVIL)
+			.filter((card: Card) => card.type === CardType.CIVIL)
 			.reduce(
-				(sum, card: CivilianCard) => sum + (card.civilizationPoints || 0),
+				(sum: number, card: CivilianCard) => sum + (card.civilizationPoints || 0),
 				0,
 			);
 	}
 
 	private calculateGuildPoints(player: Player): number {
 		return player.board
-			.filter((card) => card.type === CardType.GUILD)
+			.filter((card: Card) => card.type === CardType.GUILD)
 			.reduce(
-				(sum, card: CivilianCard) => sum + (card.civilizationPoints || 0),
+				(sum: number, card: CivilianCard) => sum + (card.civilizationPoints || 0),
 				0,
 			);
 	}
 
 	private calculateSciencePoints(player: Player): number {
-		const scienceCards: ScienceCard[] = player.board.filter(
-			(card) => card.type === CardType.SCIENCE,
+			const scienceCards: ScienceCard[] = player.board.filter(
+			(card: Card) => card.type === CardType.SCIENCE,
 		) as ScienceCard[];
 		const symbolCounts = {
 			[ScienceSymbol.TABLET]: 0,

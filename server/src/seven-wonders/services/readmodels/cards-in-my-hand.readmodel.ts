@@ -1,8 +1,8 @@
-import type { Card } from "../domain/cards/card.value-object";
-import { CardType } from "../domain/cards/card-type";
-import type { SevenWondersGameRepository } from "../domain/game-repository";
-import type { Player } from "../domain/player.entity";
-import { Resource } from "../domain/resource";
+import type { Card } from "../../domain/cards/card.value-object";
+import { CardType } from "../../domain/cards/card-type";
+import type { SevenWondersGameRepository } from "../../domain/game-repository";
+import type { Player } from "../../domain/player.entity";
+import { Resource } from "../../domain/resource";
 
 type Playable = "YES" | "NO" | "WITH_PAYMENT";
 
@@ -29,17 +29,17 @@ export class GetCardsInMyHandsReadModel {
 		if (!game) {
 			return { cards: [] };
 		}
-
-		const askedPlayer = game.players.find((player) => player.name === playerName);
+		
+		const askedPlayer = game.players.find((player: Player) => player.name.toLowerCase() === playerName.toLowerCase());
 		if (!askedPlayer) {
 			return { cards: [] };
 		}
 
 		const neighbours = game.getNeighbours(askedPlayer)
 		const cards = askedPlayer.cards;
-        
+
 		return {
-			cards: cards.map((card) => {
+			cards: cards.map((card: Card) => {
 				const playability = resolveCardPlayability(
 					card,
 					askedPlayer,
@@ -200,7 +200,7 @@ const resourcesOfPlayer = (player: Player): Map<Resource, number> => {
 	if (player.wonder?.baseResource) {
 		resources.push(player.wonder.baseResource);
 	}
-	player.board.forEach((card) => {
+	player.board.forEach((card: Card) => {
 		const produces = getResourcesProducedByCard(card);
 		resources.push(...produces);
 	});

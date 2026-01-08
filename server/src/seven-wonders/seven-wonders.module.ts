@@ -1,15 +1,13 @@
 import { Module } from "@nestjs/common";
 import { MyBoardController } from "./application/my-board-controller";
-import { GetCardsInMyHandsReadModel } from "./readmodels/cards-in-my-hand.readmodel";
-import { InMemoryGameRepository } from "./infrastructure/in-memory-game-repository";
-import type { SevenWondersGameRepository } from "./domain/game-repository";
+import { GetCardsInMyHandsReadModel } from "./services/readmodels/cards-in-my-hand.readmodel";
+import { DummyGameRepository } from "./infrastructure/dummy-game-repository";
 
 @Module({
 	providers: [
 		GetCardsInMyHandsReadModel,
-		{ provide: "SevenWondersGameRepository", useClass: InMemoryGameRepository },
+		{ provide: "SevenWondersGameRepository", useClass: DummyGameRepository },
 	],
-	exports: [],
 	controllers: [MyBoardController],
 })
 export class SevenWondersModule {}

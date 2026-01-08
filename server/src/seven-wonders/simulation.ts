@@ -1,12 +1,12 @@
 import type { SevenWondersGameRepository } from "./domain/game-repository";
 import { Player } from "./domain/player.entity";
 import { SevenWondersGame } from "./domain/seven-wonders-game";
-import { ChooseCardUseCase } from "./services/choose-card/choose-card.usecase";
-import { EndGameUsecase } from "./services/end-game/end-game.usecase";
-import { NextAgeUseCase } from "./services/next-age/next-age.usecase";
-import { NextTurnUseCase } from "./services/next-turn/next-turn.usecase";
+import { ChooseCardUseCase } from "./services/usecases/choose-card/choose-card.usecase";
+import { EndGameUsecase } from "./services/usecases/end-game/end-game.usecase";
+import { NextAgeUseCase } from "./services/usecases/next-age/next-age.usecase";
+import { NextTurnUseCase } from "./services/usecases/next-turn/next-turn.usecase";
 import { PointCalculatorService } from "./services/point-calculator/point-calculator.service";
-import { StartGameUseCase } from "./services/start-game/start-game.usecase";
+import { StartGameUseCase } from "./services/usecases/start-game/start-game.usecase";
 
 async function main() {
 	const alice = Player.create("1", "Alice");

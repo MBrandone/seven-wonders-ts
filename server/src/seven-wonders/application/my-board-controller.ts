@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { GetCardsInMyHandsReadModel } from "../readmodels/cards-in-my-hand.readmodel";
+import { GetCardsInMyHandsReadModel } from "../services/readmodels/cards-in-my-hand.readmodel";
 
 @Controller("games")
 export class MyBoardController {

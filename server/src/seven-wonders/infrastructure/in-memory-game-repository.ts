@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { SevenWondersGameRepository as SevenWonderGameRepository } from "../domain/game-repository";
+import { SevenWondersGameRepository  } from "../domain/game-repository";
 import { SevenWondersGame } from "../domain/seven-wonders-game";
 
 @Injectable()
-export class InMemoryGameRepository implements SevenWonderGameRepository {
+export class InMemoryGameRepository implements SevenWondersGameRepository {
     games: SevenWondersGame[] = []
     
     addGame(game: SevenWondersGame): Promise<void> {
@@ -18,5 +18,4 @@ export class InMemoryGameRepository implements SevenWonderGameRepository {
         }
         return Promise.resolve(game)
     }
-
 }

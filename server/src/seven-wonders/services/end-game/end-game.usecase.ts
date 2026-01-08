@@ -2,13 +2,13 @@ import { CardType } from "../../domain/cards/card-type";
 import type { CivilianCard } from "../../domain/cards/civilian-card";
 import type { ScienceCard } from "../../domain/cards/science-card";
 import { ScienceSymbol } from "../../domain/cards/science-symbol";
-import type { GameRepository } from "../../domain/game-repository";
+import type { SevenWondersGameRepository } from "../../domain/game-repository";
 import type { Player } from "../../domain/player.entity";
 import type { PointCalculatorService } from "../point-calculator/point-calculator.service";
 
 export class EndGameUsecase {
 	constructor(
-		private readonly gameRepository: GameRepository,
+		private readonly gameRepository: SevenWondersGameRepository,
 		private readonly pointsCalculator: PointCalculatorService,
 	) {}
 

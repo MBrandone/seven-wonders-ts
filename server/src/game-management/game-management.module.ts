@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { EventEmitterModule } from "@nestjs/event-emitter";
 import { DatabaseModule } from "../database/database.module";
 import { GameManagementController } from "./application/game-management.controller";
 import { GameManagementGateway } from "./application/game-management.gateway";
@@ -9,7 +8,7 @@ import { GameManagementService } from "./services/game-management.service";
 import { PlayerJoinedReactor } from "./services/player-joined.reactor";
 
 @Module({
-	imports: [DatabaseModule, EventEmitterModule.forRoot()],
+	imports: [DatabaseModule],
 	providers: [
 		GameManagementService,
 		{ provide: "GameRepository", useClass: SqlGameRepository },

@@ -13,6 +13,7 @@ describe("NextTurnUseCase", () => {
 		findById: jest.fn((gameId: string) =>
 			gameId === "game1" ? Promise.resolve(game) : Promise.resolve(null),
 		),
+		addGame: jest.fn<Promise<void>, [SevenWondersGame]>(),
 	};
 	const usecase = new NextTurnUseCase(mockedGameRepository);
 

@@ -23,32 +23,45 @@
 
 ## 7 Wonders Game
 
+### Métier
 - [X] Créer un module seven wonders game
-- [ ] L'évènement Game started : 
-- [ ] StartGameUsecase
+- [X] StartGameUsecase
     - [X] assigne une merveille à chaque joueur au hasard
     - [X] Distribue les cartes
+- [ ] Voir les cartes en la possession du joueur
+    - [ ] Voir le nom des cartes
+    - [ ] Voir si je peux la jouer ou pas, ou oui avec paiement
+    - [ ] Voir quelle transaction je peux faire pour la jouer
+- [ ] ChooseCardUseCase
+  - [ ] Le joueur ne peut pas jouer 2 fois la même carte
+      - [ ] Si la carte demande des ressources ou de l'argent, le joueur doit avoir les ressources nécessaires ou l'argent pour jouer la carte
+      - [ ] S'il n'a pas les ressources nécessaires, il peut acheter les ressources qui sont chez ses voisins et les payer 2 pièces
+    - [ ] Mettre une carte sous sa merveille
+    - [ ] Défausser une carte
 - [ ] PlayCardUseCase
   - Jouer une carte
     - [X] Le joueur prend la carte sur son plateau
-    - [ ] Le joueur ne peut pas jouer 2 fois la même carte
-    - [ ] Si la carte demande des ressources ou de l'argent, le joueur doit avoir les ressources nécessaires ou l'argent pour jouer la carte
-    - [ ] S'il n'a pas les ressources nécessaires, il peut acheter les ressources qui sont chez ses voisins et les payer 2 pièces
-  - [ ] Mettre une carte sous sa merveille
-  - [ ] Défausser une carte
+    - [ ] Si j'ai pris une carte qui me demande de payer quelques chose, la transaction est faite
 - [ ] NextTurn
   - [X] On passe à son voisin
-  - [ ] On passe les cartes à son voisin de gauche à l'age 1 et 3, et à son voisin de droite à l'age 2
-  - [ ] Si j'ai pris une carte qui me demande de payer quelques chose, la transaction est faite
+  - [X] On passe les cartes à son voisin de gauche à l'age 1 et 3, et à son voisin de droite à l'age 2
   - [ ] Si c'est le dernier tour, les cartes restantes vont dans la defausse
-- [ ] NextAge
-  - Fait la guerre
-  - Redistribue des nouvelles cartes
+- [X] NextAge
+  - [X] Fait la guerre
+  - [X] Redistribue des nouvelles cartes
 - [ ] EndGame
-  - Compte les points
-  - Determine un classement
+  - [X] Compte les points
+  - [X] Donner les propriétés de points aux cartes : CIVIL, SCIENCE et MILITAIRE
+  - [X] Donner les propriétés de points aux cartes (COMMERCIAL)
+  - [X] Donner les propriétés de points aux cartes (GUILD)
+  - [ ] Donner les propriétés de points à la carte commercial Arène, et carte guild qui concerne les merveilles
+  - [ ] Determine un classement
 
+### Tech
 
+## Refactoring
+
+- [ ] Expliciter les standards de code pour l'IA
 - [ ] La logique de récupérer tout les joueurs participants à une partie ne doit pas être dans le module Game, mais dans celui qui gère la partie de 7 wonders
 - [ ] L'évènement "player joined" peut générer un nouvel évènement "game started"
 - [ ] On ne devrait pas passer par des objets du domaine pour lire des données

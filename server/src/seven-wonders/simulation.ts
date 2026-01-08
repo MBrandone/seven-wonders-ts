@@ -1,4 +1,4 @@
-import type { GameRepository } from "./domain/game-repository";
+import type { SevenWondersGameRepository } from "./domain/game-repository";
 import { Player } from "./domain/player.entity";
 import { SevenWondersGame } from "./domain/seven-wonders-game";
 import { ChooseCardUseCase } from "./services/choose-card/choose-card.usecase";
@@ -16,10 +16,11 @@ async function main() {
 	const gameId = "game";
 	const game = new SevenWondersGame(gameId, [alice, bob, charlie]);
 
-	const gameRepository: GameRepository = {
+	const gameRepository: SevenWondersGameRepository = {
 		findById() {
 			return Promise.resolve(game);
 		},
+		addGame: () => Promise.resolve()
 	};
 
 	const startGameUseCase = new StartGameUseCase(gameRepository);

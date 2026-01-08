@@ -1,4 +1,4 @@
-import type { GameRepository } from "src/seven-wonders/domain/game-repository";
+import type { SevenWondersGameRepository } from "src/seven-wonders/domain/game-repository";
 import { ALL_CARDS } from "../../domain/cards/all-cards/all-cards";
 import { Card } from "../../domain/cards/card.value-object";
 import { CardType } from "../../domain/cards/card-type";
@@ -13,7 +13,7 @@ describe("NextAgeUseCase", () => {
 	let p3: Player;
 	let game: SevenWondersGame;
 	let deck: Deck;
-	let mockedGameRepository: GameRepository;
+	let mockedGameRepository: SevenWondersGameRepository;
 
 	beforeEach(() => {
 		const p1Board = [
@@ -56,6 +56,7 @@ describe("NextAgeUseCase", () => {
 			findById: jest.fn((gameId: string) =>
 				gameId === "game1" ? Promise.resolve(game) : Promise.resolve(null),
 			),
+			addGame: jest.fn<Promise<void>, [SevenWondersGame]>(),
 		};
 	});
 

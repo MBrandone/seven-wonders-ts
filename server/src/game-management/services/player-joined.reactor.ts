@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import type { GameManagementGateway } from "../application/game-management.gateway";
+import { GameManagementGateway } from "../application/game-management.gateway";
 import type { GameRepository } from "../domain/game-repository.interface";
 
 @Injectable()

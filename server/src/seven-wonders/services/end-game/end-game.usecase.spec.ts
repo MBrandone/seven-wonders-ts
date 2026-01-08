@@ -1,9 +1,10 @@
-import { Card, CommercialCard } from "../../domain/cards/card.value-object";
+import { Card } from "../../domain/cards/card.value-object";
+import { CommercialCard } from "../../domain/cards/commercial-card";
 import { CardType } from "../../domain/cards/card-type";
 import { CivilianCard } from "../../domain/cards/civilian-card";
 import { ScienceCard } from "../../domain/cards/science-card";
 import { ScienceSymbol } from "../../domain/cards/science-symbol";
-import type { GameRepository } from "../../domain/game-repository";
+import type { SevenWondersGameRepository } from "../../domain/game-repository";
 import { MilitaryToken } from "../../domain/militaryToken";
 import { Player } from "../../domain/player.entity";
 import { Resource } from "../../domain/resource";
@@ -14,13 +15,13 @@ import { EndGameUsecase } from "./end-game.usecase";
 
 describe("EndGameUsecase", () => {
 	let usecase: EndGameUsecase;
-	let gameRepository: jest.Mocked<GameRepository>;
+	let gameRepository: jest.Mocked<SevenWondersGameRepository>;
 
 	beforeEach(async () => {
 		gameRepository = {
 			findById: jest.fn(),
 			save: jest.fn(),
-		} as unknown as jest.Mocked<GameRepository>;
+		} as unknown as jest.Mocked<SevenWondersGameRepository>;
 
 		usecase = new EndGameUsecase(gameRepository, new PointCalculatorService());
 	});
@@ -43,7 +44,6 @@ describe("EndGameUsecase", () => {
 					() => 2,
 					() => 0,
 				),
-				new Card("one name", CardType.GUILD, 1, 1, 4),
 			],
 			coins: 10,
 			militaryTokens: [
@@ -62,7 +62,6 @@ describe("EndGameUsecase", () => {
 				new ScienceCard("", 1, 1, ScienceSymbol.TABLET),
 				new ScienceCard("", 1, 1, ScienceSymbol.TABLET),
 				new ScienceCard("", 1, 1, ScienceSymbol.WHEEL),
-				new Card("one name", CardType.GUILD, 1, 1, 3),
 			],
 			coins: 7,
 			militaryTokens: [
@@ -99,9 +98,9 @@ describe("EndGameUsecase", () => {
 		// - Cartes bleues: 8 (3 + 5)
 		// - Cartes jaunes: 2
 		// - Science: 2 (1² + 1² = 2) + 0 (pas de set complet)
-		// - Guildes: 4
-		// Total: 32
-		expect(player1.victoryPoints).toBe(32);
+		// - Guildes: à rajouter un jour, 0 pour l'instant
+		// Total: 28
+		expect(player1.victoryPoints).toBe(28);
 
 		// Points de Player2:
 		// - Merveille: 10 (2 + 3 + 5)
@@ -110,8 +109,8 @@ describe("EndGameUsecase", () => {
 		// - Cartes bleues: 2
 		// - Cartes jaunes: 0
 		// - Science: 5 (2² + 1² + 0² = 5) + 0 (pas de set complet)
-		// - Guildes: 3
-		// Total: 25
-		expect(player2.victoryPoints).toBe(25);
+		// - Guildes: à rajouter un jour, 0 pour l'instant
+		// Total: 22
+		expect(player2.victoryPoints).toBe(22);
 	});
 });

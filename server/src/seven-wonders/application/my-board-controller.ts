@@ -5,7 +5,7 @@ import { GetCardsInMyHandsReadModel } from "../readmodels/cards-in-my-hand.readm
 export class MyBoardController {
 	constructor(private readonly getCardsInMyHandReadModel: GetCardsInMyHandsReadModel) {}
 
-    @Get("board/:gameId/:playerName")
+    @Get(":gameId/:playerName")
 	async getCardsInMyHand(@Param("gameId") gameId: string, @Param("playerName") playerName: string) {
 		return this.getCardsInMyHandReadModel.read(gameId, playerName)
 	}

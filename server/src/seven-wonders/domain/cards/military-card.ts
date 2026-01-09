@@ -1,4 +1,4 @@
-import { Resource } from "../resource";
+import type { Resource } from "../resource";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
 
@@ -11,6 +11,13 @@ export class MilitaryCard extends Card {
 		neededResourcesToGet: Resource[] = [],
 		neededCoinsToGet: number = 0,
 	) {
-		super(name, CardType.MILITARY, minPlayers, age, neededResourcesToGet, neededCoinsToGet);
+		super(
+			name,
+			CardType.MILITARY,
+			minPlayers,
+			age,
+			neededResourcesToGet,
+			neededCoinsToGet,
+		);
 	}
 }

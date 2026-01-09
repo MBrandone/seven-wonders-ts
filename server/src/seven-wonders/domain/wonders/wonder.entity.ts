@@ -1,4 +1,4 @@
-import { Resource } from "../resource";
+import type { Resource } from "../resource";
 
 export class WonderStage {
 	constructor(
@@ -14,5 +14,3 @@ export class Wonder {
 		public stages: WonderStage[],
 	) {}
 }
-
-

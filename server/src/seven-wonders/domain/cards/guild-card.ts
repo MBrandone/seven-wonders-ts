@@ -1,6 +1,6 @@
 import type { Player } from "../player.entity";
+import type { Resource } from "../resource";
 import type { SevenWondersGame } from "../seven-wonders-game";
-import { Resource } from "../resource";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
 
@@ -16,6 +16,13 @@ export class GuildCard extends Card {
 		neededResourcesToGet: Resource[] = [],
 		neededCoinsToGet: number = 0,
 	) {
-		super(name, CardType.GUILD, minPlayers, age, neededResourcesToGet, neededCoinsToGet);
+		super(
+			name,
+			CardType.GUILD,
+			minPlayers,
+			age,
+			neededResourcesToGet,
+			neededCoinsToGet,
+		);
 	}
 }

@@ -1,8 +1,8 @@
 import type { Player } from "../player.entity";
+import type { Resource } from "../resource";
 import type { SevenWondersGame } from "../seven-wonders-game";
-import { Resource } from "../resource";
-import { CardType } from "./card-type";
 import { Card } from "./card.value-object";
+import { CardType } from "./card-type";
 
 export class CommercialCard extends Card {
 	constructor(
@@ -14,6 +14,13 @@ export class CommercialCard extends Card {
 		neededResourcesToGet: Resource[] = [],
 		neededCoinsToGet: number = 0,
 	) {
-		super(name, CardType.COMMERCIAL, minPlayers, age, neededResourcesToGet, neededCoinsToGet);
+		super(
+			name,
+			CardType.COMMERCIAL,
+			minPlayers,
+			age,
+			neededResourcesToGet,
+			neededCoinsToGet,
+		);
 	}
 }

@@ -1,4 +1,4 @@
-import { Resource } from "../resource";
+import type { Resource } from "../resource";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
 
@@ -12,7 +12,13 @@ export class RawMaterialCard extends Card {
 		neededResourcesToGet: Resource[] = [],
 		neededCoinsToGet: number = 0,
 	) {
-		super(name, CardType.RAW_MATERIAL, minPlayers, age, neededResourcesToGet, neededCoinsToGet);
+		super(
+			name,
+			CardType.RAW_MATERIAL,
+			minPlayers,
+			age,
+			neededResourcesToGet,
+			neededCoinsToGet,
+		);
 	}
 }
-

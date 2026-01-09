@@ -32,7 +32,7 @@ describe("Seven Wonders (e2e)", () => {
 
 		expect(response.body.cards).toHaveLength(7);
 
-		response.body.cards.forEach((card: any) => {
+		response.body.cards.forEach((card) => {
 			expect(card).toHaveProperty("playable");
 			expect(["YES", "NO", "WITH_PAYMENT"]).toContain(card.playable);
 		});

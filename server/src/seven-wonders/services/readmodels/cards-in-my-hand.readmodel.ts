@@ -1,7 +1,7 @@
 import type { Card } from "../../domain/cards/card.value-object";
 import type { SevenWondersGameRepository } from "../../domain/game-repository";
 import type { Player } from "../../domain/player.entity";
-import { Resource } from "../../domain/resource";
+import type { Resource } from "../../domain/resource";
 
 type Playable = "YES" | "NO" | "WITH_PAYMENT";
 
@@ -18,9 +18,12 @@ import { Inject, Injectable } from "@nestjs/common";
 
 @Injectable()
 export class GetCardsInMyHandsReadModel {
-	constructor(@Inject("SevenWondersGameRepository") private sevenWonderGameRepository: SevenWondersGameRepository) {}
+	constructor(
+		@Inject("SevenWondersGameRepository")
+		private sevenWonderGameRepository: SevenWondersGameRepository,
+	) {}
 
-    async read(
+	async read(
 		gameId: string,
 		playerName: string,
 	): Promise<CardsInMyHandsReadmodel> {
@@ -28,13 +31,16 @@ export class GetCardsInMyHandsReadModel {
 		if (!game) {
 			return { cards: [] };
 		}
-		
-		const askedPlayer = game.players.find((player: Player) => player.name.toLowerCase() === playerName.toLowerCase());
+
+		const askedPlayer = game.players.find(
+			(player: Player) =>
+				player.name.toLowerCase() === playerName.toLowerCase(),
+		);
 		if (!askedPlayer) {
 			return { cards: [] };
 		}
 
-		const neighbours = game.getNeighbours(askedPlayer)
+		const neighbours = game.getNeighbours(askedPlayer);
 		const cards = askedPlayer.cards;
 
 		return {
@@ -102,12 +108,12 @@ const resolveCardPlayability = (
 		}
 	});
 
-    // Les voisins n'ont pas les ressources nécessaires
+	// Les voisins n'ont pas les ressources nécessaires
 	if (missingResources.size > 0) {
 		return { playable: "NO" as Playable, costToPlay: [] };
 	}
 
-    // On calcule les coûts de ressources achetées par les voisins
+	// On calcule les coûts de ressources achetées par les voisins
 	const neighbourPayments = neighboursStocks
 		.filter((entry) => entry.purchased > 0)
 		.map((entry) => ({
@@ -121,12 +127,12 @@ const resolveCardPlayability = (
 	);
 	const totalCoinCost = coinCost + purchasedResources * RESOURCE_PURCHASE_COST;
 
-    // Le joueur ne peut pas payer
+	// Le joueur ne peut pas payer
 	if (playerCoins < totalCoinCost) {
 		return { playable: "NO" as Playable, costToPlay: [] };
 	}
 
-    // On détermine le statut de jouabilité
+	// On détermine le statut de jouabilité
 	const playableStatus: Playable =
 		purchasedResources > 0 ? "WITH_PAYMENT" : "YES";
 	return { playable: playableStatus, costToPlay: neighbourPayments };

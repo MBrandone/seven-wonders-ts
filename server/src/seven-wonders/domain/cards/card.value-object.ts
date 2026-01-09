@@ -1,5 +1,5 @@
-import { Resource } from "../resource";
-import { CardType } from "./card-type";
+import type { Resource } from "../resource";
+import type { CardType } from "./card-type";
 
 export class Card {
 	constructor(

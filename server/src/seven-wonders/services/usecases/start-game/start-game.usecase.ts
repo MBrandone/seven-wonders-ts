@@ -4,9 +4,10 @@ import type { SevenWondersGameRepository } from "../../../domain/game-repository
 import { ALL_WONDERS } from "../../../domain/wonders/all-wonders";
 
 export class StartGameUseCase {
-	constructor(private readonly sevenWonderGameRepository: SevenWondersGameRepository) {}
+	constructor(
+		private readonly sevenWonderGameRepository: SevenWondersGameRepository,
+	) {}
 
-	
 	async execute(gameId: string) {
 		const startedGame = await this.sevenWonderGameRepository.findById(gameId);
 		if (!startedGame) {
@@ -18,7 +19,7 @@ export class StartGameUseCase {
 		startedGame.assignWonders(ALL_WONDERS);
 		startedGame.assignCards(deck);
 
-		this.sevenWonderGameRepository.addGame(startedGame)
+		this.sevenWonderGameRepository.addGame(startedGame);
 
 		return startedGame;
 	}

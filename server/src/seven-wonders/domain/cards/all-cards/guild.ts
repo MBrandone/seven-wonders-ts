@@ -1,7 +1,7 @@
 // Guildes
 import type { Player } from "../../player.entity";
-import type { SevenWondersGame } from "../../seven-wonders-game";
 import { Resource } from "../../resource";
+import type { SevenWondersGame } from "../../seven-wonders-game";
 import { Card } from "../card.value-object";
 import { CardType } from "../card-type";
 import { GuildCard } from "../guild-card";
@@ -94,7 +94,7 @@ export const guildeDesArmateurs1 = new GuildCard(
 	"Guilde des armateurs",
 	3,
 	3,
-	(player: Player, game: SevenWondersGame): number => {
+	(player: Player): number => {
 		return player.board.filter((card) =>
 			[
 				CardType.RAW_MATERIAL,

@@ -1,16 +1,17 @@
-import type { SevenWondersGame } from "../../domain/seven-wonders-game";
-import { Player } from "../../domain/player.entity";
-import { GetCardsInMyHandsReadModel } from "./cards-in-my-hand.readmodel";
-import { scierie1 } from "../../domain/cards/all-cards/raw-material-cards";
-import { caserne1 } from "../../domain/cards/all-cards/military";
 import { aqueduc1, palace1 } from "../../domain/cards/all-cards/civilian";
+import { caserne1 } from "../../domain/cards/all-cards/military";
+import { scierie1 } from "../../domain/cards/all-cards/raw-material-cards";
+import type { SevenWondersGameRepository } from "../../domain/game-repository";
+import { Player } from "../../domain/player.entity";
+import type { SevenWondersGame } from "../../domain/seven-wonders-game";
 import {
-	jardinsSuspendusDeBabylone,
 	colosseDeRhodes,
+	jardinsSuspendusDeBabylone,
 	pyramideDeGizeh,
 	statueDeZeusAOlympie,
 } from "../../domain/wonders/all-wonders";
-import { Wonder } from "src/seven-wonders/domain/wonders/wonder.entity";
+import type { Wonder } from "../../domain/wonders/wonder.entity";
+import { GetCardsInMyHandsReadModel } from "./cards-in-my-hand.readmodel";
 
 describe("CardsInMyHandReadmodel", () => {
 	it("transmet le nom et le type et indique YES quand le joueur possède les ressources", async () => {
@@ -18,12 +19,15 @@ describe("CardsInMyHandReadmodel", () => {
 			cards: [scierie1],
 			coins: 3,
 		});
-		const neighbours = [buildPlayer("Bob", colosseDeRhodes), buildPlayer("Charly", pyramideDeGizeh)];
+		const neighbours = [
+			buildPlayer("Bob", colosseDeRhodes),
+			buildPlayer("Charly", pyramideDeGizeh),
+		];
 		const game = buildGame([player, ...neighbours]);
 
 		const repository = {
 			findById: jest.fn().mockResolvedValue(game),
-		} as any;
+		} as unknown as SevenWondersGameRepository;
 		const readmodel = new GetCardsInMyHandsReadModel(repository);
 
 		const result = await readmodel.read("game-1", "Alice");
@@ -48,7 +52,7 @@ describe("CardsInMyHandReadmodel", () => {
 
 		const repository = {
 			findById: jest.fn().mockResolvedValue(game),
-		} as any;
+		} as unknown as SevenWondersGameRepository;
 		const readmodel = new GetCardsInMyHandsReadModel(repository);
 
 		const result = await readmodel.read("game-1", "Alice");
@@ -69,7 +73,7 @@ describe("CardsInMyHandReadmodel", () => {
 
 		const repository = {
 			findById: jest.fn().mockResolvedValue(game),
-		} as any;
+		} as unknown as SevenWondersGameRepository;
 		const readmodel = new GetCardsInMyHandsReadModel(repository);
 
 		const result = await readmodel.read("game-1", "Alice");
@@ -89,7 +93,7 @@ describe("CardsInMyHandReadmodel", () => {
 
 		const repository = {
 			findById: jest.fn().mockResolvedValue(game),
-		} as any;
+		} as unknown as SevenWondersGameRepository;
 		const readmodel = new GetCardsInMyHandsReadModel(repository);
 
 		const result = await readmodel.read("game-1", "Alice");

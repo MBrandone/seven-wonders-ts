@@ -19,8 +19,22 @@ export const scriptorium2 = new ScienceCard(
 	[Resource.PAPYRUS],
 	0,
 );
-export const atelier1 = new ScienceCard("Atelier", 3, 1, ScienceSymbol.WHEEL, [Resource.VERRE], 0);
-export const atelier2 = new ScienceCard("Atelier", 7, 1, ScienceSymbol.WHEEL, [Resource.VERRE], 0);
+export const atelier1 = new ScienceCard(
+	"Atelier",
+	3,
+	1,
+	ScienceSymbol.WHEEL,
+	[Resource.VERRE],
+	0,
+);
+export const atelier2 = new ScienceCard(
+	"Atelier",
+	7,
+	1,
+	ScienceSymbol.WHEEL,
+	[Resource.VERRE],
+	0,
+);
 export const officine1 = new ScienceCard(
 	"Officine",
 	3,
@@ -71,8 +85,22 @@ export const bibliotheque2 = new ScienceCard(
 	[Resource.PIERRE, Resource.PIERRE, Resource.TISSU],
 	0,
 );
-export const ecole1 = new ScienceCard("École", 3, 2, ScienceSymbol.TABLET, [Resource.BOIS, Resource.PAPYRUS], 0);
-export const ecole2 = new ScienceCard("École", 7, 2, ScienceSymbol.TABLET, [Resource.BOIS, Resource.PAPYRUS], 0);
+export const ecole1 = new ScienceCard(
+	"École",
+	3,
+	2,
+	ScienceSymbol.TABLET,
+	[Resource.BOIS, Resource.PAPYRUS],
+	0,
+);
+export const ecole2 = new ScienceCard(
+	"École",
+	7,
+	2,
+	ScienceSymbol.TABLET,
+	[Resource.BOIS, Resource.PAPYRUS],
+	0,
+);
 export const dispensaire1 = new ScienceCard(
 	"Dispensaire",
 	3,
@@ -139,7 +167,35 @@ export const universite2 = new ScienceCard(
 	[Resource.BOIS, Resource.BOIS, Resource.PAPYRUS, Resource.VERRE],
 	0,
 );
-export const etude1 = new ScienceCard("Étude", 3, 3, ScienceSymbol.WHEEL, [Resource.BOIS, Resource.PAPYRUS, Resource.TISSU], 0);
-export const etude2 = new ScienceCard("Étude", 5, 3, ScienceSymbol.WHEEL, [Resource.BOIS, Resource.PAPYRUS, Resource.TISSU], 0);
-export const loge1 = new ScienceCard("Loge", 3, 3, ScienceSymbol.COMPASS, [Resource.ARGILE, Resource.ARGILE, Resource.PAPYRUS, Resource.TISSU], 0);
-export const loge2 = new ScienceCard("Loge", 6, 3, ScienceSymbol.COMPASS, [Resource.ARGILE, Resource.ARGILE, Resource.PAPYRUS, Resource.TISSU], 0);
+export const etude1 = new ScienceCard(
+	"Étude",
+	3,
+	3,
+	ScienceSymbol.WHEEL,
+	[Resource.BOIS, Resource.PAPYRUS, Resource.TISSU],
+	0,
+);
+export const etude2 = new ScienceCard(
+	"Étude",
+	5,
+	3,
+	ScienceSymbol.WHEEL,
+	[Resource.BOIS, Resource.PAPYRUS, Resource.TISSU],
+	0,
+);
+export const loge1 = new ScienceCard(
+	"Loge",
+	3,
+	3,
+	ScienceSymbol.COMPASS,
+	[Resource.ARGILE, Resource.ARGILE, Resource.PAPYRUS, Resource.TISSU],
+	0,
+);
+export const loge2 = new ScienceCard(
+	"Loge",
+	6,
+	3,
+	ScienceSymbol.COMPASS,
+	[Resource.ARGILE, Resource.ARGILE, Resource.PAPYRUS, Resource.TISSU],
+	0,
+);

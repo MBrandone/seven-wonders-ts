@@ -1,8 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
 import type { Card } from "./cards/card.value-object";
 import { CardType } from "./cards/card-type";
 import type { RawMaterialCard } from "./cards/raw-material-card";
 import type { MilitaryToken } from "./militaryToken";
-import { v4 as uuidv4 } from "uuid";
 import { Resource } from "./resource";
 
 import type { Wonder } from "./wonders/wonder.entity";

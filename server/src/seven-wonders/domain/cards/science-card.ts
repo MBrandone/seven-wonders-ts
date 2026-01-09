@@ -1,4 +1,4 @@
-import { Resource } from "../resource";
+import type { Resource } from "../resource";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
 import type { ScienceSymbol } from "./science-symbol";
@@ -12,6 +12,13 @@ export class ScienceCard extends Card {
 		neededResourcesToGet: Resource[] = [],
 		neededCoinsToGet: number = 0,
 	) {
-		super(name, CardType.SCIENCE, minPlayers, age, neededResourcesToGet, neededCoinsToGet);
+		super(
+			name,
+			CardType.SCIENCE,
+			minPlayers,
+			age,
+			neededResourcesToGet,
+			neededCoinsToGet,
+		);
 	}
 }

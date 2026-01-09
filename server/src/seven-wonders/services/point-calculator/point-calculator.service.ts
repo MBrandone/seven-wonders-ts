@@ -5,11 +5,11 @@ import type { Player } from "../../domain/player.entity";
 import type { SevenWondersGame } from "../../domain/seven-wonders-game";
 
 export class PointCalculatorService {
-	calculateCivilianPoints(player: Player) {}
+	calculateCivilianPoints(_player: Player) {}
 
-	calculateMilitaryPoints(player: Player) {}
+	calculateMilitaryPoints(_player: Player) {}
 
-	calculateSciencePoints(player: Player) {}
+	calculateSciencePoints(_player: Player) {}
 
 	calculateGuildPoints(player: Player, game: SevenWondersGame) {
 		const guildCards: GuildCard[] = player.board.filter(
@@ -37,7 +37,7 @@ export class PointCalculatorService {
 		return points;
 	}
 
-	calculateCoinsPoints(player: Player) {}
+	calculateCoinsPoints(_player: Player) {}
 
-	calculateWondersPoints(player: Player) {}
+	calculateWondersPoints(_player: Player) {}
 }

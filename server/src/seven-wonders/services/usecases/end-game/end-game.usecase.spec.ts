@@ -1,7 +1,5 @@
-import { Card } from "../../../domain/cards/card.value-object";
-import { CommercialCard } from "../../../domain/cards/commercial-card";
-import { CardType } from "../../../domain/cards/card-type";
 import { CivilianCard } from "../../../domain/cards/civilian-card";
+import { CommercialCard } from "../../../domain/cards/commercial-card";
 import { ScienceCard } from "../../../domain/cards/science-card";
 import { ScienceSymbol } from "../../../domain/cards/science-symbol";
 import type { SevenWondersGameRepository } from "../../../domain/game-repository";

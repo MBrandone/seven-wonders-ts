@@ -98,7 +98,7 @@ export default function HomePage() {
       return;
     }
     joinGameMutation.mutate({ gameId: joinGameId!, playerName }, {
-      onError: (e: any) => setJoinError(e.message || 'Erreur lors de la jointure')
+      onError: (e: Error) => setJoinError(e.message || 'Erreur lors de la jointure')
     });
   };
 

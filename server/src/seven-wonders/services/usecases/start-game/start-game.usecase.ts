@@ -1,11 +1,12 @@
 import { ALL_CARDS } from "../../../domain/cards/all-cards/all-cards";
 import { Deck } from "../../../domain/deck/deck.entity";
 import type { SevenWondersGameRepository } from "../../../domain/game-repository";
-import { ALL_WONDERS } from "../../../domain/wonder.entity";
+import { ALL_WONDERS } from "../../../domain/wonders/all-wonders";
 
 export class StartGameUseCase {
 	constructor(private readonly sevenWonderGameRepository: SevenWondersGameRepository) {}
 
+	
 	async execute(gameId: string) {
 		const startedGame = await this.sevenWonderGameRepository.findById(gameId);
 		if (!startedGame) {

@@ -1,10 +1,10 @@
 import type { SevenWondersGameRepository } from "src/seven-wonders/domain/game-repository";
-import { ALL_CARDS } from "../../domain/cards/all-cards/all-cards";
-import { Card } from "../../domain/cards/card.value-object";
-import { CardType } from "../../domain/cards/card-type";
-import { Deck } from "../../domain/deck/deck.entity";
-import { Player } from "../../domain/player.entity";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { ALL_CARDS } from "../../../domain/cards/all-cards/all-cards";
+import { Card } from "../../../domain/cards/card.value-object";
+import { CardType } from "../../../domain/cards/card-type";
+import { Deck } from "../../../domain/deck/deck.entity";
+import { Player } from "../../../domain/player.entity";
+import { SevenWondersGame } from "../../../domain/seven-wonders-game";
 import { NextAgeUseCase } from "./next-age.usecase";
 
 describe("NextAgeUseCase", () => {

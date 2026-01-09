@@ -1,7 +1,7 @@
-import { Card } from "../../domain/cards/card.value-object";
-import { CardType } from "../../domain/cards/card-type";
-import { Player } from "../../domain/player.entity";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { Card } from "../../../domain/cards/card.value-object";
+import { CardType } from "../../../domain/cards/card-type";
+import { Player } from "../../../domain/player.entity";
+import { SevenWondersGame } from "../../../domain/seven-wonders-game";
 import { NextTurnUseCase } from "./next-turn.usecase";
 
 describe("NextTurnUseCase", () => {

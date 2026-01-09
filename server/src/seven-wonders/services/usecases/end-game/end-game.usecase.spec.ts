@@ -1,16 +1,16 @@
-import { Card } from "../../domain/cards/card.value-object";
-import { CommercialCard } from "../../domain/cards/commercial-card";
-import { CardType } from "../../domain/cards/card-type";
-import { CivilianCard } from "../../domain/cards/civilian-card";
-import { ScienceCard } from "../../domain/cards/science-card";
-import { ScienceSymbol } from "../../domain/cards/science-symbol";
-import type { SevenWondersGameRepository } from "../../domain/game-repository";
-import { MilitaryToken } from "../../domain/militaryToken";
-import { Player } from "../../domain/player.entity";
-import { Resource } from "../../domain/resource";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
-import { Wonder, WonderStage } from "../../domain/wonder.entity";
-import { PointCalculatorService } from "../point-calculator/point-calculator.service";
+import { Card } from "../../../domain/cards/card.value-object";
+import { CommercialCard } from "../../../domain/cards/commercial-card";
+import { CardType } from "../../../domain/cards/card-type";
+import { CivilianCard } from "../../../domain/cards/civilian-card";
+import { ScienceCard } from "../../../domain/cards/science-card";
+import { ScienceSymbol } from "../../../domain/cards/science-symbol";
+import type { SevenWondersGameRepository } from "../../../domain/game-repository";
+import { MilitaryToken } from "../../../domain/militaryToken";
+import { Player } from "../../../domain/player.entity";
+import { Resource } from "../../../domain/resource";
+import { SevenWondersGame } from "../../../domain/seven-wonders-game";
+import { Wonder, WonderStage } from "../../../domain/wonders/wonder.entity";
+import { PointCalculatorService } from "../../point-calculator/point-calculator.service";
 import { EndGameUsecase } from "./end-game.usecase";
 
 describe("EndGameUsecase", () => {

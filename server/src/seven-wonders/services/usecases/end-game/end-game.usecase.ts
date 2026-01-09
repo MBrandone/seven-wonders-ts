@@ -1,4 +1,4 @@
-import { WonderStage } from "../../../domain/wonder.entity";
+import { WonderStage } from "../../../domain/wonders/wonder.entity";
 import { CardType } from "../../../domain/cards/card-type";
 import type { CivilianCard } from "../../../domain/cards/civilian-card";
 import type { ScienceCard } from "../../../domain/cards/science-card";

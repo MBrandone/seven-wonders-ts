@@ -1,6 +1,5 @@
-import { GameRepository } from "src/game-management/domain/game-repository.interface";
-import { Player } from "../../domain/player.entity";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { Player } from "../../../domain/player.entity";
+import { SevenWondersGame } from "../../../domain/seven-wonders-game";
 import { StartGameUseCase } from "./start-game.usecase";
 
 describe("StartGameUseCase", () => {

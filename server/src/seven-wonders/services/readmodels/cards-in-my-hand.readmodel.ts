@@ -1,5 +1,4 @@
 import type { Card } from "../../domain/cards/card.value-object";
-import { CardType } from "../../domain/cards/card-type";
 import type { SevenWondersGameRepository } from "../../domain/game-repository";
 import type { Player } from "../../domain/player.entity";
 import { Resource } from "../../domain/resource";
@@ -65,13 +64,12 @@ const resolveCardPlayability = (
 	const coinCost = card.coinsCost;
 	const playerCoins = player.coins;
 
-	const playerResources = resourcesOfPlayer(player);
+	const playerResources = player.getResources();
 	const missingResources = remainingRequiredResources(
 		requiredResources,
 		playerResources,
 	);
 
-    // Le joueur a les ressources nécessaires
 	if (totalCount(missingResources) === 0) {
 		if (playerCoins < coinCost) {
 			return { playable: "NO" as Playable, costToPlay: [] };
@@ -79,10 +77,9 @@ const resolveCardPlayability = (
 		return { playable: "YES" as Playable, costToPlay: [] };
 	}
 
-    // On cherche les ressources manquantes parmi les voisins
 	const neighboursStocks = neighbours.map((neighbour) => ({
 		player: neighbour,
-		available: resourcesOfPlayer(neighbour),
+		available: neighbour.getResources(),
 		purchased: 0,
 	}));
 
@@ -135,35 +132,6 @@ const resolveCardPlayability = (
 	return { playable: playableStatus, costToPlay: neighbourPayments };
 };
 
-const getResourcesProducedByCard = (card: Card): Resource[] => {
-	const resources: Resource[] = [];
-	
-	// Les cartes RAW_MATERIAL produisent leur ressource de base selon leur nom
-	if (card.type === CardType.RAW_MATERIAL) {
-		if (card.name.includes("Chantier") || card.name.includes("Exploitation Forestière") || card.name.includes("Scierie")) {
-			resources.push(Resource.BOIS);
-		} else if (card.name.includes("Cavité") || card.name.includes("Carrière")) {
-			resources.push(Resource.PIERRE);
-		} else if (card.name.includes("Bassin Argileux") || card.name.includes("Fosse Argileuse") || card.name.includes("Briquetterie")) {
-			resources.push(Resource.ARGILE);
-		} else if (card.name.includes("Filon") || card.name.includes("Gisement") || card.name.includes("Mine") || card.name.includes("Fonderie")) {
-			resources.push(Resource.MINERAI);
-		}
-	}
-	
-	if (card.type === CardType.MANUFACTURED_GOOD) {
-		if (card.name.includes("Verrerie")) {
-			resources.push(Resource.VERRE);
-		} else if (card.name.includes("Presse")) {
-			resources.push(Resource.PAPYRUS);
-		} else if (card.name.includes("Métier à Tisser")) {
-			resources.push(Resource.TISSU);
-		}
-	}
-	
-	return resources;
-};
-
 const RESOURCE_PURCHASE_COST = 2;
 
 const countResources = (resources: Resource[]) => {
@@ -189,21 +157,3 @@ const remainingRequiredResources = (
 
 const totalCount = (entries: Map<Resource, number>) =>
 	Array.from(entries.values()).reduce((sum, qty) => sum + qty, 0);
-
-const resourcesOfPlayer = (player: Player): Map<Resource, number> => {
-	const resources: Resource[] = [];
-	const explicitResources = (player as unknown as { resources?: Resource[] })
-		.resources;
-	if (explicitResources) {
-		resources.push(...explicitResources);
-	}
-	if (player.wonder?.baseResource) {
-		resources.push(player.wonder.baseResource);
-	}
-	player.board.forEach((card: Card) => {
-		const produces = getResourcesProducedByCard(card);
-		resources.push(...produces);
-	});
-	return countResources(resources);
-};
-

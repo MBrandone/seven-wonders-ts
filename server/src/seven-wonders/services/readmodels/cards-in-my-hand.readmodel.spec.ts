@@ -1,18 +1,24 @@
-import { Resource } from "../domain/resource";
-import type { SevenWondersGame } from "../domain/seven-wonders-game";
-import type { Card } from "../domain/cards/card.value-object";
-import type { Player } from "../domain/player.entity";
+import type { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { Player } from "../../domain/player.entity";
 import { GetCardsInMyHandsReadModel } from "./cards-in-my-hand.readmodel";
+import { scierie1 } from "../../domain/cards/all-cards/raw-material-cards";
+import { caserne1 } from "../../domain/cards/all-cards/military";
+import { aqueduc1, palace1 } from "../../domain/cards/all-cards/civilian";
+import {
+	jardinsSuspendusDeBabylone,
+	colosseDeRhodes,
+	pyramideDeGizeh,
+	statueDeZeusAOlympie,
+} from "../../domain/wonders/all-wonders";
+import { Wonder } from "src/seven-wonders/domain/wonders/wonder.entity";
 
 describe("CardsInMyHandReadmodel", () => {
 	it("transmet le nom et le type et indique YES quand le joueur possède les ressources", async () => {
-		const card = buildCard("Scierie", "RAW_MATERIAL", [Resource.BOIS], 0);
-		const player = buildPlayer("Alice", {
-			cards: [card],
-			resources: [Resource.BOIS],
+		const player = buildPlayer("Alice", jardinsSuspendusDeBabylone, {
+			cards: [scierie1],
 			coins: 3,
 		});
-		const neighbours = [buildPlayer("Bob"), buildPlayer("Charly")];
+		const neighbours = [buildPlayer("Bob", colosseDeRhodes), buildPlayer("Charly", pyramideDeGizeh)];
 		const game = buildGame([player, ...neighbours]);
 
 		const repository = {
@@ -32,14 +38,12 @@ describe("CardsInMyHandReadmodel", () => {
 	});
 
 	it("indique WITH_PAYMENT quand la ressource manque et est achetée à un voisin", async () => {
-		const card = buildCard("Caserne", "MILITARY", [Resource.MINERAI], 0);
-		const player = buildPlayer("Alice", {
-			cards: [card],
-			resources: [],
+		const player = buildPlayer("Alice", jardinsSuspendusDeBabylone, {
+			cards: [caserne1],
 			coins: 5,
 		});
-		const leftNeighbour = buildPlayer("Bob", { resources: [Resource.MINERAI] });
-		const rightNeighbour = buildPlayer("Charly", { resources: [] });
+		const leftNeighbour = buildPlayer("Bob", colosseDeRhodes);
+		const rightNeighbour = buildPlayer("Charly", pyramideDeGizeh);
 		const game = buildGame([player, leftNeighbour, rightNeighbour]);
 
 		const repository = {
@@ -56,10 +60,11 @@ describe("CardsInMyHandReadmodel", () => {
 	});
 
 	it("indique NO quand la ressource manque chez tout le monde", async () => {
-		const card = buildCard("Aqueduc", "CIVIL", [Resource.PIERRE, Resource.PIERRE], 0);
-		const player = buildPlayer("Alice", { cards: [card], resources: [] });
-		const leftNeighbour = buildPlayer("Bob", { resources: [] });
-		const rightNeighbour = buildPlayer("Charly", { resources: [] });
+		const player = buildPlayer("Alice", jardinsSuspendusDeBabylone, {
+			cards: [aqueduc1],
+		});
+		const leftNeighbour = buildPlayer("Bob", colosseDeRhodes);
+		const rightNeighbour = buildPlayer("Charly", pyramideDeGizeh);
 		const game = buildGame([player, leftNeighbour, rightNeighbour]);
 
 		const repository = {
@@ -74,18 +79,12 @@ describe("CardsInMyHandReadmodel", () => {
 	});
 
 	it("indique NO quand les voisins ont les ressources mais que le joueur ne peut pas payer", async () => {
-		const card = buildCard("Palace", "CIVIL", [Resource.BOIS, Resource.PIERRE], 0);
-		const player = buildPlayer("Alice", {
-			cards: [card],
-			resources: [],
+		const player = buildPlayer("Alice", statueDeZeusAOlympie, {
+			cards: [palace1],
 			coins: 1,
 		});
-		const leftNeighbour = buildPlayer("Bob", {
-			resources: [Resource.BOIS],
-		});
-		const rightNeighbour = buildPlayer("Charly", {
-			resources: [Resource.PIERRE],
-		});
+		const leftNeighbour = buildPlayer("Bob", jardinsSuspendusDeBabylone);
+		const rightNeighbour = buildPlayer("Charly", pyramideDeGizeh);
 		const game = buildGame([player, leftNeighbour, rightNeighbour]);
 
 		const repository = {
@@ -100,30 +99,12 @@ describe("CardsInMyHandReadmodel", () => {
 	});
 });
 
-const buildCard = (
-	name: string,
-	type: string,
-    resourcesCost: Resource[] = [],
-    coinsCost: number,
-	overrides: Partial<Card> = {},
-): Card =>
-	({
-		name,
-		type,
-		age: 1,
-		minPlayers: 3,
-        resourcesCost: resourcesCost,
-        coinsCost: coinsCost,
-		...overrides,
-	}) as Card;
-
 const buildPlayer = (
 	name: string,
-	overrides: Partial<Player> & {
-		resources?: Resource[];
-	} = {},
-): Player =>
-	({
+	wonder: Wonder,
+	overrides: Partial<Player> = {},
+): Player => {
+	const player = {
 		id: `${name}-id`,
 		name,
 		cards: [],
@@ -131,7 +112,13 @@ const buildPlayer = (
 		coins: 3,
 		militaryTokens: [],
 		...overrides,
-	}) as Player;
+	};
+
+	const newPlayer = new Player(player);
+	newPlayer.wonder = wonder;
+
+	return newPlayer;
+};
 
 const buildGame = (players: Player[]): SevenWondersGame =>
 	({

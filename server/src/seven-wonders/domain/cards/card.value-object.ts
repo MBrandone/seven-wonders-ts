@@ -10,4 +10,11 @@ export class Card {
 		public readonly resourcesCost: Resource[] = [],
 		public readonly coinsCost: number = 0,
 	) {}
+
+	resourcesCostMap(): Map<Resource, number> {
+		return this.resourcesCost.reduce<Map<Resource, number>>((acc, resource) => {
+			acc.set(resource, (acc.get(resource) ?? 0) + 1);
+			return acc;
+		}, new Map<Resource, number>());
+	}
 }

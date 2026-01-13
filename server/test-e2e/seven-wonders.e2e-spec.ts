@@ -32,9 +32,12 @@ describe("Seven Wonders (e2e)", () => {
 
 		expect(response.body.cards).toHaveLength(7);
 
-		response.body.cards.forEach((card) => {
-			expect(card).toHaveProperty("playable");
-			expect(["YES", "NO", "WITH_PAYMENT"]).toContain(card.playable);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		response.body.cards.forEach((card: any) => {
+			expect(card).toHaveProperty("playability");
+			expect(["YES", "NO", "WITH_PAYMENT"]).toContain(
+				card.playability.playable,
+			);
 		});
 	});
 });

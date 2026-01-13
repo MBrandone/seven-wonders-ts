@@ -7,6 +7,8 @@ These rules are mandatory and must always be followed.
 - Follow Clean Code principles
 - Prefer explicit types over inference when it improves clarity
 - Avoid magic values
+- Do not use comments and make the naming of variables and functions the most explicit
+- Forbidden to use double assertion (as unknown as)
 
 ## Architecture
 - Nest project is divided into sevaral modules which must be the most independent possible

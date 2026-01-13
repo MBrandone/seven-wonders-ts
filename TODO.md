@@ -1,5 +1,9 @@
 # TODO & THOUGHTS
 
+## NEXT STEP
+UI ?
+Choose card usecase ?
+
 ## Game Management
 
 - Démarrer une partie quand celle-ci est pleine
@@ -29,15 +33,19 @@
     - [X] assigne une merveille à chaque joueur au hasard
     - [X] Distribue les cartes
 - [ ] Voir les cartes en la possession du joueur
-    - [ ] Voir le nom des cartes
-    - [ ] Voir si je peux la jouer ou pas, ou oui avec paiement
+    - [X] Voir le nom des cartes
+    - [X] Voir si je peux la jouer ou pas, ou oui avec paiement
     - [ ] Voir quelle transaction je peux faire pour la jouer
+      - [X] Faire des transactions avec  un seul joueur
+      - [X] Faire des transactions avec plusieurs joueurs
+      - [X] Voir toutes les transactions possibles
+      - [ ] Intégrer les cartes de commerces dans les couts des transactions (caravanserail, forum, marché ...)
 - [ ] ChooseCardUseCase
   - [ ] Le joueur ne peut pas jouer 2 fois la même carte
-      - [ ] Si la carte demande des ressources ou de l'argent, le joueur doit avoir les ressources nécessaires ou l'argent pour jouer la carte
-      - [ ] S'il n'a pas les ressources nécessaires, il peut acheter les ressources qui sont chez ses voisins et les payer 2 pièces
-    - [ ] Mettre une carte sous sa merveille
-    - [ ] Défausser une carte
+  - [ ] Si la carte demande des ressources ou de l'argent, le joueur doit avoir les ressources nécessaires ou l'argent pour jouer la carte
+  - [ ] S'il n'a pas les ressources nécessaires, il peut acheter les ressources qui sont chez ses voisins et les payer 2 pièces
+  - [ ] Mettre une carte sous sa merveille
+  - [ ] Défausser une carte
 - [ ] PlayCardUseCase
   - Jouer une carte
     - [X] Le joueur prend la carte sur son plateau

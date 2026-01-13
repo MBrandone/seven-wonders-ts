@@ -31,10 +31,12 @@ It's a 7 wonders game which is playable on the web.
 ## Code Language & Style
 - Use TypeScript exclusively
 - Follow Clean Code principles
+- Function should be concise (less than 10 lines)
 - Prefer explicit types over inference when it improves clarity
-- Avoid magic values
+- Avoid magic values and use enums or Objects to give sense
 - Do not use comments and make the naming of variables and functions the most explicit
 - It is forbidden to use double assertion (as unknown as)
+- Do the necessary refactoring : if a function parameter is not used, remove it from function parameters and delete it in all function calls
 
 ## Architecture
 - Nest project is divided into sevaral modules which must be the most independent possible
@@ -45,6 +47,26 @@ It's a 7 wonders game which is playable on the web.
   - HTTP / REST
   - external services
 - Dependencies always point inward
+
+## Testing
+- All the written code should be tested by automated tests
+- Write the tests in the GIVEN, WHEN and THEN fashion and mark each section with the appropriate comment (//GIVEN, //WHEN and //THEN)
+- Tests are written in french. The "describe" jest method should always start with a sentences like "Quand ..." whic explain the situation we are in before making the assertions. The "it" jest method should always start with "Alors ..." and explain the assertion. This is an example : 
+```
+describe("When this condition apply", () => {
+  it("Then this is the assertion", () => {
+    // GIVEN
+    const a = 1;
+    const b = 2
+
+    // WHEN
+    const result = a + b
+
+    // THEN
+    expect(result).toBe(3)
+  })
+})
+```
 
 ## Tooling
 - Code must comply with Biome linter rules

@@ -1,7 +1,7 @@
-import type { Resource } from "../resource";
+import { Resource } from "../resource";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
-import type { ScienceSymbol } from "./science-symbol";
+import { ScienceSymbol } from "./science-symbol";
 
 export class ScienceCard extends Card {
 	constructor(

@@ -1,6 +1,6 @@
-import type { Player } from "../player.entity";
-import type { Resource } from "../resource";
-import type { SevenWondersGame } from "../seven-wonders-game";
+import { Player } from "../player.entity";
+import { Resource } from "../resource";
+import { SevenWondersGame } from "../seven-wonders-game";
 import { Card } from "./card.value-object";
 import { CardType } from "./card-type";
 

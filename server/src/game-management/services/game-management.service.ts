@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
-import type { EventEmitter2 } from "@nestjs/event-emitter";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 import { v4 as uuidv4 } from "uuid";
 import { Game } from "../domain/game.entity";
-import type { GameRepository } from "../domain/game-repository.interface";
+import { GameRepository } from "../domain/game-repository.interface";
 import { Player } from "../domain/player.entity";
-import type { PlayerRepository } from "../domain/player-repository.interface";
+import { PlayerRepository } from "../domain/player-repository.interface";
 
 @Injectable()
 export class GameManagementService {

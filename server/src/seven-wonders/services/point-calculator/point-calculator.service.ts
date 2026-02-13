@@ -1,8 +1,8 @@
-import type { CommercialCard } from "src/seven-wonders/domain/cards/commercial-card";
+import { CommercialCard } from "src/seven-wonders/domain/cards/commercial-card";
 import { CardType } from "../../domain/cards/card-type";
-import type { GuildCard } from "../../domain/cards/guild-card";
-import type { Player } from "../../domain/player.entity";
-import type { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { GuildCard } from "../../domain/cards/guild-card";
+import { Player } from "../../domain/player.entity";
+import { SevenWondersGame } from "../../domain/seven-wonders-game";
 
 export class PointCalculatorService {
 	calculateCivilianPoints(_player: Player) {}

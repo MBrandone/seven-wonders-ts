@@ -2,7 +2,7 @@ import { CivilianCard } from "../../../domain/cards/civilian-card";
 import { CommercialCard } from "../../../domain/cards/commercial-card";
 import { ScienceCard } from "../../../domain/cards/science-card";
 import { ScienceSymbol } from "../../../domain/cards/science-symbol";
-import type { SevenWondersGameRepository } from "../../../domain/game-repository";
+import { SevenWondersGameRepository } from "../../../domain/game-repository";
 import { MilitaryToken } from "../../../domain/militaryToken";
 import { Player } from "../../../domain/player.entity";
 import { Resource } from "../../../domain/resource";

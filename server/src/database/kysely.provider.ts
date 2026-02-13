@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import type { Database } from "./database.types";
+import { Database } from "./database.types";
 import "dotenv/config";
 
 export const kyselyProvider = {

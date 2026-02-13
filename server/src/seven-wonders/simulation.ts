@@ -1,4 +1,4 @@
-import type { SevenWondersGameRepository } from "./domain/game-repository";
+import { SevenWondersGameRepository } from "./domain/game-repository";
 import { Player } from "./domain/player.entity";
 import { SevenWondersGame } from "./domain/seven-wonders-game";
 import { PointCalculatorService } from "./services/point-calculator/point-calculator.service";

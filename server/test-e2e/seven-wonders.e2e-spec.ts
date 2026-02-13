@@ -1,4 +1,4 @@
-import type { INestApplication } from "@nestjs/common";
+import { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { AppModule } from "../src/app.module";
@@ -32,12 +32,13 @@ describe("Seven Wonders (e2e)", () => {
 
 		expect(response.body.cards).toHaveLength(7);
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		response.body.cards.forEach((card: any) => {
-			expect(card).toHaveProperty("playability");
-			expect(["YES", "NO", "WITH_PAYMENT"]).toContain(
-				card.playability.playable,
-			);
-		});
+		response.body.cards.forEach(
+			(card: { playability: { playable: string } }) => {
+				expect(card).toHaveProperty("playability");
+				expect(["YES", "NO", "WITH_PAYMENT"]).toContain(
+					card.playability.playable,
+				);
+			},
+		);
 	});
 });

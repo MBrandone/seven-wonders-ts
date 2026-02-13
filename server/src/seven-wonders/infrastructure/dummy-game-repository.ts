@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ALL_CARDS } from "../domain/cards/all-cards/all-cards";
 import { Deck } from "../domain/deck/deck.entity";
-import type { SevenWondersGameRepository } from "../domain/game-repository";
+import { SevenWondersGameRepository } from "../domain/game-repository";
 import { Player } from "../domain/player.entity";
 import { SevenWondersGame } from "../domain/seven-wonders-game";
 import { ALL_WONDERS } from "../domain/wonders/all-wonders";

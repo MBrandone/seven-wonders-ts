@@ -1,6 +1,6 @@
-import type { GameManagementGateway } from "../application/game-management.gateway";
+import { GameManagementGateway } from "../application/game-management.gateway";
 import { Game } from "../domain/game.entity";
-import type { GameRepository } from "../domain/game-repository.interface";
+import { GameRepository } from "../domain/game-repository.interface";
 import { GameStatus } from "../domain/game-status.enum";
 import { PlayerJoinedReactor } from "./player-joined.reactor";
 

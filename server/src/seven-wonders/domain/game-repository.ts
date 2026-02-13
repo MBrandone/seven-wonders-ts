@@ -1,4 +1,4 @@
-import type { SevenWondersGame } from "./seven-wonders-game";
+import { SevenWondersGame } from "./seven-wonders-game";
 
 export interface SevenWondersGameRepository {
 	findById(gameId: string): Promise<SevenWondersGame | null>;

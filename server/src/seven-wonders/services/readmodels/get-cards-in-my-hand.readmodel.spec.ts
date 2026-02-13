@@ -11,9 +11,9 @@ import {
 	filon1,
 	scierie1,
 } from "../../domain/cards/all-cards/raw-material-cards";
-import type { SevenWondersGameRepository } from "../../domain/game-repository";
+import { SevenWondersGameRepository } from "../../domain/game-repository";
 import { Player } from "../../domain/player.entity";
-import type { SevenWondersGame } from "../../domain/seven-wonders-game";
+import { SevenWondersGame } from "../../domain/seven-wonders-game";
 import {
 	colosseDeRhodes,
 	jardinsSuspendusDeBabylone,
@@ -21,7 +21,7 @@ import {
 	pyramideDeGizeh,
 	statueDeZeusAOlympie,
 } from "../../domain/wonders/all-wonders";
-import type { Wonder } from "../../domain/wonders/wonder.entity";
+import { Wonder } from "../../domain/wonders/wonder.entity";
 import {
 	PlayableEnum,
 	type PlayableWithPayment,

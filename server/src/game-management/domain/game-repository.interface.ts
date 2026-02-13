@@ -1,5 +1,5 @@
-import type { Game } from "./game.entity";
-import type { Player } from "./player.entity";
+import { Game } from "./game.entity";
+import { Player } from "./player.entity";
 
 export interface GameRepository {
 	createGame(game: Game, player: Player): Promise<Game>;

@@ -1,4 +1,4 @@
-import type { SevenWondersGameRepository } from "../../../domain/game-repository";
+import { SevenWondersGameRepository } from "../../../domain/game-repository";
 
 export class ChooseCardUseCase {
 	constructor(private readonly gameRepository: SevenWondersGameRepository) {}

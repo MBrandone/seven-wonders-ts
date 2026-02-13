@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import type { SevenWondersGameRepository } from "../domain/game-repository";
-import type { SevenWondersGame } from "../domain/seven-wonders-game";
+import { SevenWondersGameRepository } from "../domain/game-repository";
+import { SevenWondersGame } from "../domain/seven-wonders-game";
 
 @Injectable()
 export class InMemoryGameRepository implements SevenWondersGameRepository {

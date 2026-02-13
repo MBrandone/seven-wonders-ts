@@ -1,4 +1,4 @@
-import type { Card } from "../card.value-object";
+import { Card } from "../card.value-object";
 import {
 	aqueduc1,
 	aqueduc2,

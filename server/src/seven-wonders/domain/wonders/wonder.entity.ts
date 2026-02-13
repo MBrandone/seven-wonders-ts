@@ -1,4 +1,4 @@
-import type { Resource } from "../resource";
+import { Resource } from "../resource";
 
 export class WonderStage {
 	constructor(

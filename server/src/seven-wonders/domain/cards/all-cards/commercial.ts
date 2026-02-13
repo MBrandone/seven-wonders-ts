@@ -1,4 +1,4 @@
-import type { Player } from "../../player.entity";
+import { Player } from "../../player.entity";
 import { Resource } from "../../resource";
 import { Card } from "../card.value-object";
 import { CardType } from "../card-type";

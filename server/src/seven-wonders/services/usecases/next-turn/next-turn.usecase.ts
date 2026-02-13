@@ -1,5 +1,5 @@
-import type { SevenWondersGameRepository } from "../../../domain/game-repository";
-import type { Player } from "../../../domain/player.entity";
+import { SevenWondersGameRepository } from "../../../domain/game-repository";
+import { Player } from "../../../domain/player.entity";
 
 export class NextTurnUseCase {
 	constructor(private readonly gameRepository: SevenWondersGameRepository) {}

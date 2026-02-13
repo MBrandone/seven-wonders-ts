@@ -1,4 +1,4 @@
-import type { SevenWondersGameRepository } from "src/seven-wonders/domain/game-repository";
+import { SevenWondersGameRepository } from "src/seven-wonders/domain/game-repository";
 import { ALL_CARDS } from "../../../domain/cards/all-cards/all-cards";
 import { Card } from "../../../domain/cards/card.value-object";
 import { CardType } from "../../../domain/cards/card-type";

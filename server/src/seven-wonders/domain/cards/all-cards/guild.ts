@@ -1,7 +1,7 @@
 // Guildes
-import type { Player } from "../../player.entity";
+import { Player } from "../../player.entity";
 import { Resource } from "../../resource";
-import type { SevenWondersGame } from "../../seven-wonders-game";
+import { SevenWondersGame } from "../../seven-wonders-game";
 import { Card } from "../card.value-object";
 import { CardType } from "../card-type";
 import { GuildCard } from "../guild-card";

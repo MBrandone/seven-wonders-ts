@@ -1,4 +1,4 @@
-import type { Player } from "./player.entity";
+import { Player } from "./player.entity";
 
 export interface PlayerRepository {
 	findByName(name: string): Promise<Player | null>;

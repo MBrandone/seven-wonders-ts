@@ -1,13 +1,13 @@
-import type { Card } from "../../../domain/cards/card.value-object";
+import { Card } from "../../../domain/cards/card.value-object";
 import { CardType } from "../../../domain/cards/card-type";
-import type { CivilianCard } from "../../../domain/cards/civilian-card";
-import type { ScienceCard } from "../../../domain/cards/science-card";
+import { CivilianCard } from "../../../domain/cards/civilian-card";
+import { ScienceCard } from "../../../domain/cards/science-card";
 import { ScienceSymbol } from "../../../domain/cards/science-symbol";
-import type { SevenWondersGameRepository } from "../../../domain/game-repository";
-import type { MilitaryToken } from "../../../domain/militaryToken";
-import type { Player } from "../../../domain/player.entity";
-import type { WonderStage } from "../../../domain/wonders/wonder.entity";
-import type { PointCalculatorService } from "../../point-calculator/point-calculator.service";
+import { SevenWondersGameRepository } from "../../../domain/game-repository";
+import { MilitaryToken } from "../../../domain/militaryToken";
+import { Player } from "../../../domain/player.entity";
+import { WonderStage } from "../../../domain/wonders/wonder.entity";
+import { PointCalculatorService } from "../../point-calculator/point-calculator.service";
 
 export class EndGameUsecase {
 	constructor(

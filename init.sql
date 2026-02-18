@@ -18,10 +18,9 @@ CREATE TABLE IF NOT EXISTS wonders (
 );
 
 CREATE TABLE IF NOT EXISTS game_players (
-  id UUID PRIMARY KEY,
   game_id UUID NOT NULL REFERENCES games(id) ON DELETE CASCADE,
   player_id UUID NOT NULL REFERENCES players(id) ON DELETE CASCADE,
-  UNIQUE(game_id, player_id)
+  PRIMARY KEY (game_id, player_id)
 );
 
 -- Insertion des merveilles de base (côté A)

@@ -1,7 +1,7 @@
-import { GameManagementGateway } from "../application/game-management.gateway";
-import { Game } from "../domain/game.entity";
-import { GameRepository } from "../domain/game-repository.interface";
-import { GameStatus } from "../domain/game-status.enum";
+import { Game } from "../../domain/game.entity";
+import { GameStatus } from "../../domain/game-status.enum";
+import { GameRepository } from "../../domain/repositories/game-repository";
+import { GameManagementGateway } from "../game-management.gateway";
 import { PlayerJoinedReactor } from "./player-joined.reactor";
 
 describe("PlayerJoinedReactor", () => {
@@ -31,6 +31,7 @@ describe("PlayerJoinedReactor", () => {
 				if (id === "g2") return Promise.resolve(waitingGame);
 				return Promise.resolve(null);
 			}),
+			save: jest.fn(),
 		} as unknown as jest.Mocked<GameRepository>;
 		gameGateway = {
 			emitGameFull: jest.fn(),

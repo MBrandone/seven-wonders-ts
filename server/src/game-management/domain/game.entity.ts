@@ -1,3 +1,5 @@
+import { GameFullError } from "./errors/game-full.error";
+import { PlayerAlreadyInGameError } from "./errors/player-already-in-game.error";
 import { GameStatus } from "./game-status.enum";
 
 export class Game {
@@ -37,8 +39,11 @@ export class Game {
 	}
 
 	addPlayer(playerId: string): void {
+		if (!this.canAddPlayer()) {
+			throw new GameFullError();
+		}
 		if (this.players.includes(playerId)) {
-			throw new Error("Ce joueur est déjà dans la partie");
+			throw new PlayerAlreadyInGameError();
 		}
 		this.players.push(playerId);
 		if (this.players.length === this.maxPlayers) {

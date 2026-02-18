@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import { GameManagementGateway } from "../application/game-management.gateway";
-import { GameRepository } from "../domain/game-repository.interface";
+import { GameRepository } from "../../domain/repositories/game-repository";
+import { GameManagementGateway } from "../game-management.gateway";
 
 @Injectable()
 export class PlayerJoinedReactor {

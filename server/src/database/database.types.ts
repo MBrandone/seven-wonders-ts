@@ -17,7 +17,6 @@ export interface Wonder {
 }
 
 export interface GamePlayer {
-	id: string;
 	game_id: string;
 	player_id: string;
 }

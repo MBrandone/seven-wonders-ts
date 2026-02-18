@@ -13,12 +13,15 @@ It's a 7 wonders game which is playable on the web.
   - infrastructure: database, repositories implementations, persistence implementations
 - E2E tests are located in /e2e and test complete user journeys
 
+# Architecture
+Controller calls ReadModels and Command Handlers using Commands and Query
+
 ## Frontend
 - Framework: React
 - Language: TypeScript
 - Focus on maintainability and explicit state management
 
-# Bash commands
+# Common commands
 - npm run build: Build the project
 - npm run format: Format code
 - npm run test: run automated tests

@@ -10,10 +10,10 @@ import { PostGamesController } from "./application/rest-endpoints/post-games/pos
 import { PostGamesIdPlayerController } from "./application/rest-endpoints/post-games-id-player/post-games-id-player-controller";
 import { CreateGameCommandHandler } from "./domain/command-handlers/create-game-command-handler";
 import { JoinAnIncompleteGameCommandHandler } from "./domain/command-handlers/join-an-incomplete-game-command-handler";
-import { SqlAvailableGamesReadModel } from "./infrastructure/sql-available-games-read-model";
-import { SqlGameReadModel } from "./infrastructure/sql-game-read-model";
-import { SqlGameRepository } from "./infrastructure/sql-game-repository";
-import { SqlPlayerRepository } from "./infrastructure/sql-player-repository";
+import { SqlAvailableGamesReadModel } from "./infrastructure/read-models/sql-available-games-read-model";
+import { SqlGameReadModel } from "./infrastructure/read-models/sql-game-read-model";
+import { SqlGameRepository } from "./infrastructure/repositories/sql-game-repository";
+import { SqlPlayerRepository } from "./infrastructure/repositories/sql-player-repository";
 
 @Module({
 	imports: [DatabaseModule],

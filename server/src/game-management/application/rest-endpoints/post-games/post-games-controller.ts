@@ -3,7 +3,9 @@ import { CreateGameCommandHandler } from "../../../domain/command-handlers/creat
 
 @Controller("games")
 export class PostGamesController {
-	constructor(private readonly createGameHandler: CreateGameCommandHandler) {}
+	constructor(
+		private readonly createGameHandler: CreateGameCommandHandler,
+	) {}
 
 	@Post()
 	async createGame(
@@ -16,6 +18,10 @@ export class PostGamesController {
 		if (!playerName) {
 			return { error: "playerName est requis." };
 		}
-		return this.createGameHandler.handle({ maxPlayers, playerName });
+		const gameId = await this.createGameHandler.handle({
+			maxPlayers,
+			playerName,
+		});
+		return { id: gameId };
 	}
 }

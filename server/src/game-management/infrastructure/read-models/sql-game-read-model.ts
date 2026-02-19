@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Kysely } from "kysely";
-import { Database } from "../../database/database.types";
-import { Game, GameReadModel } from "../domain/read-models/game-read-model";
+import { Database } from "../../../database/database.types";
+import { Game, GameReadModel } from "../../domain/read-models/game-read-model";
 
 @Injectable()
 export class SqlGameReadModel implements GameReadModel {

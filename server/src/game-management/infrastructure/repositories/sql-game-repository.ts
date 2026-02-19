@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Kysely } from "kysely";
-import { Database } from "../../database/database.types";
-import { Game } from "../domain/game.entity";
-import { GameStatus } from "../domain/game-status.enum";
-import { GameRepository } from "../domain/repositories/game-repository";
+import { Database } from "../../../database/database.types";
+import { Game } from "../../domain/game.entity";
+import { GameStatus } from "../../domain/game-status.enum";
+import { GameRepository } from "../../domain/repositories/game-repository";
 
 @Injectable()
 export class SqlGameRepository implements GameRepository {

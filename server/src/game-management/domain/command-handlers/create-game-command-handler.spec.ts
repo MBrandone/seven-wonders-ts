@@ -63,10 +63,7 @@ describe("Quand on exécute CreateGameCommandHandler", () => {
 			);
 			const savedGame = jest.mocked(gameRepository.save).mock.calls[0][0];
 			expect(savedGame.players).toHaveLength(1);
-			expect(result).toHaveProperty("id");
-			expect(result).toHaveProperty("created_at");
-			expect(result).toHaveProperty("status", "waiting");
-			expect(result).toHaveProperty("max_players", 3);
+			expect(result).toBe(savedGame.id);
 			expect(playerRepository.findByName).toHaveBeenCalledWith("Alice");
 			expect(playerRepository.createPlayer).not.toHaveBeenCalled();
 		});
@@ -90,8 +87,8 @@ describe("Quand on exécute CreateGameCommandHandler", () => {
 					players: expect.any(Array),
 				}),
 			);
-			expect(result.id).toBeDefined();
-			expect(result.max_players).toBe(3);
+			const savedGame = jest.mocked(gameRepository.save).mock.calls[0][0];
+			expect(result).toBe(savedGame.id);
 		});
 	});
 });

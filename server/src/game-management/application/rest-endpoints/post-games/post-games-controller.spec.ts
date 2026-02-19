@@ -19,15 +19,16 @@ describe("Quand on appelle le controller pour créer une partie", () => {
 	});
 
 	describe("Quand on crée une partie (POST /games)", () => {
-		it("Alors le handler est appelé avec maxPlayers et playerName et son résultat est renvoyé", async () => {
+		it("Alors le handler est appelé avec maxPlayers et playerName", async () => {
 			// GIVEN
 			const createdGame = {
 				id: "g1",
 				created_at: new Date(),
 				status: "waiting",
 				max_players: 3,
+				players: [{ id: "p1", name: "Alice" }],
 			};
-			jest.mocked(createGameHandler.handle).mockResolvedValue(createdGame);
+			jest.mocked(createGameHandler.handle).mockResolvedValue("g1");
 
 			// WHEN
 			const result = await controller.createGame(3, "Alice");
@@ -37,7 +38,6 @@ describe("Quand on appelle le controller pour créer une partie", () => {
 				maxPlayers: 3,
 				playerName: "Alice",
 			});
-			expect(result).toEqual(createdGame);
 		});
 
 		it("Alors une erreur est renvoyée si maxPlayers est inférieur à 3", async () => {

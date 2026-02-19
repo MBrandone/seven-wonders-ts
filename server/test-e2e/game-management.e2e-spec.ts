@@ -1,10 +1,13 @@
 import { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
+import type { Kysely } from "kysely";
 import * as request from "supertest";
+import type { Database } from "../src/database/database.types";
 import { AppModule } from "../src/app.module";
 
-describe("Game Management (e2e)", () => {
+describe("Quand une partie est créée et que deux joueurs supplémentaires rejoignent", () => {
 	let app: INestApplication;
+	let db: Kysely<Database>;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -13,9 +16,11 @@ describe("Game Management (e2e)", () => {
 
 		app = moduleFixture.createNestApplication();
 		await app.init();
+		db = app.get<Kysely<Database>>("Kysely");
 	});
 
-	it("should create a game, add 2 players, and status should be in_progress", async () => {
+	it("Alors la réponse API et les données en base reflètent une partie en cours avec 3 joueurs", async () => {
+		// GIVEN
 		const createRes = await request(app.getHttpServer())
 			.post("/games")
 			.send({ maxPlayers: 3, playerName: "Alice" })
@@ -32,11 +37,58 @@ describe("Game Management (e2e)", () => {
 			.send({ playerName: "Charlie" })
 			.expect(201);
 
-		// Récupère la partie
+		// WHEN
 		const getRes = await request(app.getHttpServer())
 			.get(`/games/${gameId}`)
 			.expect(200);
+
+		// THEN (API)
 		expect(getRes.body.players.length).toBe(3);
 		expect(getRes.body).toHaveProperty("status", "in_progress");
+
+		// THEN (base de données)
+		const { gameRow, gamePlayerRows, playerRows } =
+			await getGameDataFromDb(db, gameId);
+		expect(gameRow).toBeDefined();
+		expect(gameRow?.status).toBe("in_progress");
+		expect(gameRow?.max_players).toBe(3);
+		expect(gamePlayerRows).toHaveLength(3);
+		expect(new Set(gamePlayerRows.map((r) => r.player_id)).size).toBe(3);
+		expect(playerRows).toHaveLength(3);
+		expect(playerRows.map((p) => p.name).sort()).toEqual(
+			["Alice", "Bob", "Charlie"].sort(),
+		);
 	});
 });
+
+async function getGameDataFromDb(db: Kysely<Database>, gameId: string) {
+	const gameRow = await getGameDb(db, gameId);
+	const gamePlayerRows = await getGamePlayersDb(db, gameId);
+	const playerRows = await getPlayersForGameDb(db, gameId);
+	return { gameRow, gamePlayerRows, playerRows };
+}
+
+async function getGameDb(db: Kysely<Database>, gameId: string) {
+	return db
+		.selectFrom("games")
+		.selectAll()
+		.where("id", "=", gameId)
+		.executeTakeFirst();
+}
+
+async function getGamePlayersDb(db: Kysely<Database>, gameId: string) {
+	return db
+		.selectFrom("game_players")
+		.selectAll()
+		.where("game_id", "=", gameId)
+		.execute();
+}
+
+async function getPlayersForGameDb(db: Kysely<Database>, gameId: string) {
+	return db
+		.selectFrom("game_players")
+		.innerJoin("players", "players.id", "game_players.player_id")
+		.select(["players.id", "players.name"])
+		.where("game_players.game_id", "=", gameId)
+		.execute();
+}

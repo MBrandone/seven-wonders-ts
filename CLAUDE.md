@@ -40,6 +40,7 @@ Controller calls ReadModels and Command Handlers using Commands and Query
 - Do not use comments and make the naming of variables and functions the most explicit
 - It is forbidden to use double assertion (as unknown as)
 - Do the necessary refactoring : if a function parameter is not used, remove it from function parameters and delete it in all function calls
+- Order functions in newspaper style: put the most important or highest-level functions first (like the headline), then the helper or detail functions below (inverted pyramid). In a test file, place the test describe/blocks at the top and helper functions at the end; among helpers, put the main entry point first, then the functions it calls.
 
 ## Architecture
 - Nest project is divided into sevaral modules which must be the most independent possible
@@ -50,6 +51,7 @@ Controller calls ReadModels and Command Handlers using Commands and Query
   - HTTP / REST
   - external services
 - Dependencies always point inward
+- Domain errors are handled by the application layer in the controllers class
 
 ## Testing
 - All the written code should be tested by automated tests
@@ -80,3 +82,4 @@ describe("When this condition apply", () => {
 - Prefer minimal and incremental changes
 - Explain trade-offs briefly when relevant
 - Before starting to code, give a plan on what you are going to do. You can start to good once I approve the plan
+- When standards are given to you in order to refactor, try to save these rules in CLAUDE.md to always apply them

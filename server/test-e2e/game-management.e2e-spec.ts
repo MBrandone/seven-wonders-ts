@@ -42,31 +42,26 @@ describe("Quand une partie est créée et que deux joueurs supplémentaires rejo
 			.get(`/games/${gameId}`)
 			.expect(200);
 
-		// THEN (API)
+		// THEN
 		expect(getRes.body.players.length).toBe(3);
 		expect(getRes.body).toHaveProperty("status", "in_progress");
 
-		// THEN (base de données)
-		const { gameRow, gamePlayerRows, playerRows } =
-			await getGameDataFromDb(db, gameId);
+		const gameRow = await getGameDb(db, gameId);
 		expect(gameRow).toBeDefined();
 		expect(gameRow?.status).toBe("in_progress");
 		expect(gameRow?.max_players).toBe(3);
+		
+		const gamePlayerRows = await getGamePlayersDb(db, gameId);
 		expect(gamePlayerRows).toHaveLength(3);
 		expect(new Set(gamePlayerRows.map((r) => r.player_id)).size).toBe(3);
+		
+		const playerRows = await getPlayersForGameDb(db, gameId);
 		expect(playerRows).toHaveLength(3);
 		expect(playerRows.map((p) => p.name).sort()).toEqual(
 			["Alice", "Bob", "Charlie"].sort(),
 		);
 	});
 });
-
-async function getGameDataFromDb(db: Kysely<Database>, gameId: string) {
-	const gameRow = await getGameDb(db, gameId);
-	const gamePlayerRows = await getGamePlayersDb(db, gameId);
-	const playerRows = await getPlayersForGameDb(db, gameId);
-	return { gameRow, gamePlayerRows, playerRows };
-}
 
 async function getGameDb(db: Kysely<Database>, gameId: string) {
 	return db

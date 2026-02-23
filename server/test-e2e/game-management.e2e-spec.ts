@@ -2,8 +2,8 @@ import { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Kysely } from "kysely";
 import * as request from "supertest";
-import type { Database } from "../src/database/database.types";
 import { AppModule } from "../src/app.module";
+import type { Database } from "../src/database/database.types";
 
 describe("Quand une partie est créée et que deux joueurs supplémentaires rejoignent", () => {
 	let app: INestApplication;
@@ -50,11 +50,11 @@ describe("Quand une partie est créée et que deux joueurs supplémentaires rejo
 		expect(gameRow).toBeDefined();
 		expect(gameRow?.status).toBe("in_progress");
 		expect(gameRow?.max_players).toBe(3);
-		
+
 		const gamePlayerRows = await getGamePlayersDb(db, gameId);
 		expect(gamePlayerRows).toHaveLength(3);
 		expect(new Set(gamePlayerRows.map((r) => r.player_id)).size).toBe(3);
-		
+
 		const playerRows = await getPlayersForGameDb(db, gameId);
 		expect(playerRows).toHaveLength(3);
 		expect(playerRows.map((p) => p.name).sort()).toEqual(

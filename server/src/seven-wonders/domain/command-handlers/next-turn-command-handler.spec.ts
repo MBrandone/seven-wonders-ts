@@ -1,10 +1,10 @@
-import { Card } from "../../../domain/cards/card.value-object";
-import { CardType } from "../../../domain/cards/card-type";
-import { Player } from "../../../domain/player.entity";
-import { SevenWondersGame } from "../../../domain/seven-wonders-game";
-import { NextTurnUseCase } from "./next-turn.usecase";
+import { Card } from "../cards/card.value-object";
+import { CardType } from "../cards/card-type";
+import { Player } from "../player.entity";
+import { SevenWondersGame } from "../seven-wonders-game";
+import { NextTurnCommandHandler } from "./next-turn-command-handler";
 
-describe("NextTurnUseCase", () => {
+describe("Quand on passe au tour suivant", () => {
 	let game: SevenWondersGame;
 	let alice: Player;
 	let bob: Player;
@@ -15,7 +15,7 @@ describe("NextTurnUseCase", () => {
 		),
 		addGame: jest.fn<Promise<void>, [SevenWondersGame]>(),
 	};
-	const usecase = new NextTurnUseCase(mockedGameRepository);
+	const handler = new NextTurnCommandHandler(mockedGameRepository);
 
 	beforeEach(() => {
 		const aliceCards = [
@@ -42,28 +42,27 @@ describe("NextTurnUseCase", () => {
 		game = new SevenWondersGame("game1", [alice, bob, charlie]);
 	});
 
-	it("lève une erreur si un des joueurs n'a pas joué de carte", async () => {
-		// Given
+	it("Alors une erreur est levée si un des joueurs n'a pas joué de carte", async () => {
+		// GIVEN
 		alice.chooseCardToBePlayed("A");
 		bob.chooseCardToBePlayed("C");
 
-		// When
-		await expect(() => usecase.execute("game1"))
-
-			// Then
+		// WHEN
+		await expect(() => handler.handle({ gameId: "game1" }))
+			// THEN
 			.rejects.toThrow("Tous les joueurs doivent avoir joué une carte");
 	});
 
-	it("retire la carte choisie du joueur, et la met sur son plateau", async () => {
-		// Given
+	it("Alors la carte choisie est retirée du joueur et mise sur son plateau", async () => {
+		// GIVEN
 		alice.chooseCardToBePlayed("A");
 		bob.chooseCardToBePlayed("C");
 		charlie.chooseCardToBePlayed("E");
 
-		// When
-		await usecase.execute("game1");
+		// WHEN
+		await handler.handle({ gameId: "game1" });
 
-		// Then
+		// THEN
 		expect(alice.board.length).toBe(1);
 		expect(alice.board[0].name).toBe("A");
 
@@ -74,23 +73,18 @@ describe("NextTurnUseCase", () => {
 		expect(charlie.board[0].name).toBe("E");
 	});
 
-	it("fait passer les cartes en main d'un joueur à son voisin", async () => {
-		// Given
+	it("Alors les cartes en main passent d'un joueur à son voisin", async () => {
+		// GIVEN
 		alice.chooseCardToBePlayed("A");
 		bob.chooseCardToBePlayed("C");
 		charlie.chooseCardToBePlayed("E");
 
-		// When
-		await usecase.execute("game1");
+		// WHEN
+		await handler.handle({ gameId: "game1" });
 
-		// Then
-		// Alice doit avoir la main de Bob (D)
+		// THEN
 		expect(alice.cards.map((c) => c.name)).toEqual(["F"]);
-
-		// Bob doit avoir la main de Charlie (F)
 		expect(bob.cards.map((c) => c.name)).toEqual(["B"]);
-
-		// Charlie doit avoir la main d'Alice (B)
 		expect(charlie.cards.map((c) => c.name)).toEqual(["D"]);
 	});
 });

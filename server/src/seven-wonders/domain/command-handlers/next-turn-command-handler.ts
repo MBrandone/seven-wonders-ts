@@ -1,11 +1,12 @@
-import { SevenWondersGameRepository } from "../../../domain/game-repository";
-import { Player } from "../../../domain/player.entity";
+import { NextTurnCommand } from "../commands/next-turn-command";
+import { SevenWondersGameRepository } from "../game-repository";
+import { Player } from "../player.entity";
 
-export class NextTurnUseCase {
+export class NextTurnCommandHandler {
 	constructor(private readonly gameRepository: SevenWondersGameRepository) {}
 
-	async execute(gameId: string): Promise<void> {
-		const game = await this.gameRepository.findById(gameId);
+	async handle(command: NextTurnCommand): Promise<void> {
+		const game = await this.gameRepository.findById(command.gameId);
 		if (!game) throw new Error("Partie non trouvée");
 
 		if (game.players.some((player: Player) => !player.hasChosenCard())) {

@@ -1,13 +1,13 @@
-import { SevenWondersGameRepository } from "src/seven-wonders/domain/game-repository";
-import { ALL_CARDS } from "../../../domain/cards/all-cards/all-cards";
-import { Card } from "../../../domain/cards/card.value-object";
-import { CardType } from "../../../domain/cards/card-type";
-import { Deck } from "../../../domain/deck/deck.entity";
-import { Player } from "../../../domain/player.entity";
-import { SevenWondersGame } from "../../../domain/seven-wonders-game";
-import { NextAgeUseCase } from "./next-age.usecase";
+import { ALL_CARDS } from "../cards/all-cards/all-cards";
+import { Card } from "../cards/card.value-object";
+import { CardType } from "../cards/card-type";
+import { Deck } from "../deck/deck.entity";
+import { SevenWondersGameRepository } from "../game-repository";
+import { Player } from "../player.entity";
+import { SevenWondersGame } from "../seven-wonders-game";
+import { NextAgeCommandHandler } from "./next-age-command-handler";
 
-describe("NextAgeUseCase", () => {
+describe("Quand on passe à l'âge suivant", () => {
 	let p1: Player;
 	let p2: Player;
 	let p3: Player;
@@ -60,12 +60,12 @@ describe("NextAgeUseCase", () => {
 		};
 	});
 
-	it("attribue les jetons de guerre correctement", async () => {
-		// When
-		const usecase = new NextAgeUseCase(mockedGameRepository);
-		await usecase.execute("game1");
+	it("Alors les jetons de guerre sont attribués correctement", async () => {
+		// WHEN
+		const handler = new NextAgeCommandHandler(mockedGameRepository);
+		await handler.handle({ gameId: "game1" });
 
-		// Then
+		// THEN
 		expect(game.currentAge).toBe(2);
 		expect(p1.warVictoryTokens).toBe(2);
 		expect(p1.warDefeatTokens).toBe(0);
@@ -75,12 +75,12 @@ describe("NextAgeUseCase", () => {
 		expect(p3.warDefeatTokens).toBe(2);
 	});
 
-	it(" distribue 7 cartes à chaque joueur", async () => {
-		// When
-		const usecase = new NextAgeUseCase(mockedGameRepository);
-		await usecase.execute("game1");
+	it("Alors 7 cartes sont distribuées à chaque joueur", async () => {
+		// WHEN
+		const handler = new NextAgeCommandHandler(mockedGameRepository);
+		await handler.handle({ gameId: "game1" });
 
-		// Then
+		// THEN
 		for (const p of game.players) {
 			expect(p.cards.length).toBe(7);
 		}

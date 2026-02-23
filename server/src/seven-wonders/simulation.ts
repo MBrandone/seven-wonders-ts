@@ -1,12 +1,12 @@
+import { ChooseCardCommandHandler } from "./domain/command-handlers/choose-card-command-handler";
+import { EndGameCommandHandler } from "./domain/command-handlers/end-game-command-handler";
+import { NextAgeCommandHandler } from "./domain/command-handlers/next-age-command-handler";
+import { NextTurnCommandHandler } from "./domain/command-handlers/next-turn-command-handler";
+import { StartGameCommandHandler } from "./domain/command-handlers/start-game-command-handler";
 import { SevenWondersGameRepository } from "./domain/game-repository";
 import { Player } from "./domain/player.entity";
+import { PointCalculatorService } from "./domain/point-calculator/point-calculator.service";
 import { SevenWondersGame } from "./domain/seven-wonders-game";
-import { PointCalculatorService } from "./services/point-calculator/point-calculator.service";
-import { ChooseCardUseCase } from "./services/usecases/choose-card/choose-card.usecase";
-import { EndGameUsecase } from "./services/usecases/end-game/end-game.usecase";
-import { NextAgeUseCase } from "./services/usecases/next-age/next-age.usecase";
-import { NextTurnUseCase } from "./services/usecases/next-turn/next-turn.usecase";
-import { StartGameUseCase } from "./services/usecases/start-game/start-game.usecase";
 
 async function main() {
 	const alice = Player.create("1", "Alice");
@@ -23,87 +23,156 @@ async function main() {
 		addGame: () => Promise.resolve(),
 	};
 
-	const startGameUseCase = new StartGameUseCase(gameRepository);
-	const playCardUseCase = new ChooseCardUseCase(gameRepository);
-	const nextTurnUseCase = new NextTurnUseCase(gameRepository);
-	const nextAgeUseCase = new NextAgeUseCase(gameRepository);
+	const startGameCommandHandler = new StartGameCommandHandler(gameRepository);
+	const chooseCardCommandHandler = new ChooseCardCommandHandler(gameRepository);
+	const nextTurnCommandHandler = new NextTurnCommandHandler(gameRepository);
+	const nextAgeCommandHandler = new NextAgeCommandHandler(gameRepository);
 
-	await startGameUseCase.execute(gameId);
+	await startGameCommandHandler.handle({ gameId });
 
 	// Age 1
-	await playAge(playCardUseCase, gameId, alice, bob, charlie, nextTurnUseCase);
+	await playAge(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+		nextTurnCommandHandler,
+	);
 	printBoard(alice, bob, charlie);
 
 	// End Age 1 and start Age 2
-	await nextAgeUseCase.execute(gameId);
+	await nextAgeCommandHandler.handle({ gameId });
 
 	// Age 2
-	await playAge(playCardUseCase, gameId, alice, bob, charlie, nextTurnUseCase);
+	await playAge(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+		nextTurnCommandHandler,
+	);
 	printBoard(alice, bob, charlie);
 
 	// End Age 2 and start Age 3
-	await nextAgeUseCase.execute(gameId);
+	await nextAgeCommandHandler.handle({ gameId });
 
 	// Age 3
-	await playAge(playCardUseCase, gameId, alice, bob, charlie, nextTurnUseCase);
+	await playAge(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+		nextTurnCommandHandler,
+	);
 	printBoard(alice, bob, charlie);
 
 	// Final War
-	await nextAgeUseCase.execute(gameId);
+	await nextAgeCommandHandler.handle({ gameId });
 
 	// End Game
-	await new EndGameUsecase(
+	await new EndGameCommandHandler(
 		gameRepository,
 		new PointCalculatorService(),
-	).execute(gameId);
+	).handle({ gameId });
 	printPlayersScores(game.players);
 }
 
 main();
 
 async function playAge(
-	playCardUseCase: ChooseCardUseCase,
+	chooseCardCommandHandler: ChooseCardCommandHandler,
 	gameId: string,
 	alice: Player,
 	bob: Player,
 	charlie: Player,
-	nextTurnUseCase: NextTurnUseCase,
+	nextTurnCommandHandler: NextTurnCommandHandler,
 ) {
 	// draw 1
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 
 	// draw 2
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 
 	// draw 3
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 
 	// draw 4
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 
 	// draw 5
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 
 	// draw 6
-	await allPlayersChooseCard(playCardUseCase, gameId, alice, bob, charlie);
-	await nextTurnUseCase.execute(gameId);
+	await allPlayersChooseCard(
+		chooseCardCommandHandler,
+		gameId,
+		alice,
+		bob,
+		charlie,
+	);
+	await nextTurnCommandHandler.handle({ gameId });
 }
 
 async function allPlayersChooseCard(
-	playCardUseCase: ChooseCardUseCase,
+	chooseCardCommandHandler: ChooseCardCommandHandler,
 	gameId: string,
 	alice: Player,
 	bob: Player,
 	charlie: Player,
 ) {
-	await playCardUseCase.execute(gameId, "1", alice.cards[0].name);
-	await playCardUseCase.execute(gameId, "2", bob.cards[0].name);
-	await playCardUseCase.execute(gameId, "3", charlie.cards[0].name);
+	await chooseCardCommandHandler.handle({
+		gameId,
+		playerId: "1",
+		cardName: alice.cards[0].name,
+	});
+	await chooseCardCommandHandler.handle({
+		gameId,
+		playerId: "2",
+		cardName: bob.cards[0].name,
+	});
+	await chooseCardCommandHandler.handle({
+		gameId,
+		playerId: "3",
+		cardName: charlie.cards[0].name,
+	});
 }
 
 function printBoard(alice: Player, bob: Player, charlie: Player) {

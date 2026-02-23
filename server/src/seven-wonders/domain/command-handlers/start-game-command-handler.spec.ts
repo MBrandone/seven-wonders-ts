@@ -1,20 +1,20 @@
-import { Player } from "../../../domain/player.entity";
-import { SevenWondersGame } from "../../../domain/seven-wonders-game";
-import { StartGameUseCase } from "./start-game.usecase";
+import { Player } from "../player.entity";
+import { SevenWondersGame } from "../seven-wonders-game";
+import { StartGameCommandHandler } from "./start-game-command-handler";
 
-describe("StartGameUseCase", () => {
-	let usecase: StartGameUseCase;
+describe("Quand on démarre une partie", () => {
+	let handler: StartGameCommandHandler;
 	const mockedGameRepository = {
 		findById: jest.fn<Promise<SevenWondersGame>, [string]>(),
 		addGame: jest.fn<Promise<void>, [SevenWondersGame]>(),
 	};
 
 	beforeEach(() => {
-		usecase = new StartGameUseCase(mockedGameRepository);
+		handler = new StartGameCommandHandler(mockedGameRepository);
 	});
 
-	it("Quand je démarre une partie, chaque joueur se voit attribuer une merveille différente au hasard et 7 cartes", async () => {
-		// Given
+	it("Alors chaque joueur se voit attribuer une merveille différente au hasard et 7 cartes", async () => {
+		// GIVEN
 		const alice = Player.create("1", "Alice");
 		const bob = Player.create("2", "Bob");
 		const charlie = Player.create("3", "Charlie");
@@ -22,10 +22,10 @@ describe("StartGameUseCase", () => {
 		const game = new SevenWondersGame("id", players);
 		mockedGameRepository.findById.mockResolvedValue(game);
 
-		// When
-		const sevenWondersGame = await usecase.execute("id");
+		// WHEN
+		const sevenWondersGame = await handler.handle({ gameId: "id" });
 
-		// Then
+		// THEN
 		expect(
 			sevenWondersGame.players.every((player) => player.board !== undefined),
 		).toBe(true);

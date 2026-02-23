@@ -3,9 +3,7 @@ import { CreateGameCommandHandler } from "../../../domain/command-handlers/creat
 
 @Controller("games")
 export class PostGamesController {
-	constructor(
-		private readonly createGameHandler: CreateGameCommandHandler,
-	) {}
+	constructor(private readonly createGameHandler: CreateGameCommandHandler) {}
 
 	@Post()
 	async createGame(

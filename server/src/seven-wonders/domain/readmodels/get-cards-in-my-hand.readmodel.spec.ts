@@ -1,27 +1,23 @@
-import {
-	aqueduc1,
-	palace1,
-	tribunal1,
-} from "../../domain/cards/all-cards/civilian";
-import { metierATisser1 } from "../../domain/cards/all-cards/manufactured-good";
-import { caserne1, ecuries1 } from "../../domain/cards/all-cards/military";
+import { aqueduc1, palace1, tribunal1 } from "../cards/all-cards/civilian";
+import { metierATisser1 } from "../cards/all-cards/manufactured-good";
+import { caserne1, ecuries1 } from "../cards/all-cards/military";
 import {
 	bassinArgileux1,
 	briquetterie1,
 	filon1,
 	scierie1,
-} from "../../domain/cards/all-cards/raw-material-cards";
-import { SevenWondersGameRepository } from "../../domain/game-repository";
-import { Player } from "../../domain/player.entity";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
+} from "../cards/all-cards/raw-material-cards";
+import { SevenWondersGameRepository } from "../game-repository";
+import { Player } from "../player.entity";
+import { SevenWondersGame } from "../seven-wonders-game";
 import {
 	colosseDeRhodes,
 	jardinsSuspendusDeBabylone,
 	mausoleeDHalicarnasse,
 	pyramideDeGizeh,
 	statueDeZeusAOlympie,
-} from "../../domain/wonders/all-wonders";
-import { Wonder } from "../../domain/wonders/wonder.entity";
+} from "../wonders/all-wonders";
+import { Wonder } from "../wonders/wonder.entity";
 import {
 	PlayableEnum,
 	type PlayableWithPayment,

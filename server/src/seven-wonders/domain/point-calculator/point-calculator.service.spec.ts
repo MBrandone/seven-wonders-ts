@@ -3,7 +3,7 @@ import {
 	bains1,
 	jardins1,
 	theatre1,
-} from "../../domain/cards/all-cards/civilian";
+} from "../cards/all-cards/civilian";
 import {
 	bazar1,
 	caravanserail1,
@@ -18,7 +18,7 @@ import {
 	taverne1,
 	taverne2,
 	vignoble1,
-} from "../../domain/cards/all-cards/commercial";
+} from "../cards/all-cards/commercial";
 import {
 	guildeDesArmateurs1,
 	guildeDesArtisans1,
@@ -27,21 +27,21 @@ import {
 	guildeDesMagistrats1,
 	guildeDesPhilosophes1,
 	guildeDesTravailleurs1,
-} from "../../domain/cards/all-cards/guild";
+} from "../cards/all-cards/guild";
 import {
 	metierATisser2,
 	presse1,
 	presse2,
 	verrerie1,
 	verrerie2,
-} from "../../domain/cards/all-cards/manufactured-good";
+} from "../cards/all-cards/manufactured-good";
 import {
 	arsenal1,
 	caserne1,
 	ecuries1,
 	fortifications2,
 	palissade1,
-} from "../../domain/cards/all-cards/military";
+} from "../cards/all-cards/military";
 import {
 	bassinArgileux1,
 	cavite1,
@@ -51,16 +51,16 @@ import {
 	filon2,
 	fosseArgileuse,
 	friche,
-} from "../../domain/cards/all-cards/raw-material-cards";
+} from "../cards/all-cards/raw-material-cards";
 import {
 	dispensaire1,
 	etude1,
 	scriptorium1,
 	universite1,
 	universite2,
-} from "../../domain/cards/all-cards/science";
-import { buildPlayer } from "../../domain/player.entity";
-import { SevenWondersGame } from "../../domain/seven-wonders-game";
+} from "../cards/all-cards/science";
+import { buildPlayer } from "../player.entity";
+import { SevenWondersGame } from "../seven-wonders-game";
 import { PointCalculatorService } from "./point-calculator.service";
 
 describe("PointCalculator", () => {

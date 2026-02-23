@@ -1,25 +1,26 @@
-import { Card } from "../../../domain/cards/card.value-object";
-import { CardType } from "../../../domain/cards/card-type";
-import { CivilianCard } from "../../../domain/cards/civilian-card";
-import { ScienceCard } from "../../../domain/cards/science-card";
-import { ScienceSymbol } from "../../../domain/cards/science-symbol";
-import { SevenWondersGameRepository } from "../../../domain/game-repository";
-import { MilitaryToken } from "../../../domain/militaryToken";
-import { Player } from "../../../domain/player.entity";
-import { WonderStage } from "../../../domain/wonders/wonder.entity";
-import { PointCalculatorService } from "../../point-calculator/point-calculator.service";
+import { Card } from "../cards/card.value-object";
+import { CardType } from "../cards/card-type";
+import { CivilianCard } from "../cards/civilian-card";
+import { ScienceCard } from "../cards/science-card";
+import { ScienceSymbol } from "../cards/science-symbol";
+import { EndGameCommand } from "../commands/end-game-command";
+import { SevenWondersGameRepository } from "../game-repository";
+import { MilitaryToken } from "../militaryToken";
+import { Player } from "../player.entity";
+import { PointCalculatorService } from "../point-calculator/point-calculator.service";
+import { WonderStage } from "../wonders/wonder.entity";
 
-export class EndGameUsecase {
+export class EndGameCommandHandler {
 	constructor(
 		private readonly gameRepository: SevenWondersGameRepository,
 		private readonly pointsCalculator: PointCalculatorService,
 	) {}
 
-	async execute(gameId: string): Promise<void> {
-		const game = await this.gameRepository.findById(gameId);
+	async handle(command: EndGameCommand): Promise<void> {
+		const game = await this.gameRepository.findById(command.gameId);
 
 		if (!game) {
-			throw new Error(`Game with id ${gameId} not found`);
+			throw new Error(`Game with id ${command.gameId} not found`);
 		}
 
 		for (const player of game.players) {

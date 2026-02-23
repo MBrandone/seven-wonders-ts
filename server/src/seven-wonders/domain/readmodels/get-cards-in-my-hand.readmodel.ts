@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Card } from "../../domain/cards/card.value-object";
-import { SevenWondersGameRepository } from "../../domain/game-repository";
-import { Player } from "../../domain/player.entity";
-import { Resource } from "../../domain/resource";
+import { Card } from "../cards/card.value-object";
+import { SevenWondersGameRepository } from "../game-repository";
+import { Player } from "../player.entity";
+import { Resource } from "../resource";
 import {
 	type CardsInMyHandsReadmodel,
 	notPlayable,

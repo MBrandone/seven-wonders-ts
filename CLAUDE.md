@@ -6,14 +6,14 @@ It's a 7 wonders game which is playable on the web.
 - Framework: NestJS
 - Architecture: independants modules and hexagonal architecture inside each modules
 - Testing: Jest
-- Layers:
-  - domain: entities, value objects
-  - services: use cases and read models
-  - application: API endpoints, jobs, workers, gateways
-  - infrastructure: database, repositories implementations, persistence implementations
 - E2E tests are located in /e2e and test complete user journeys
 
 # Architecture
+Follow Domain Driven Design and hexagonal architecture rules as much as possible
+Layers:
+  - application: API endpoints, jobs, workers, gateways
+  - domain: entities, value objects, commands, command handlers, query, read models and services
+  - infrastructure: database, repositories implementations, persistence implementations
 Controller calls ReadModels and Command Handlers using Commands and Query
 
 ## Frontend
